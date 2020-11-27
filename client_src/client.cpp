@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string.h>
-#include "definitions.hpp"
+#include "client.hpp"
 
 #define PORT 8080
 

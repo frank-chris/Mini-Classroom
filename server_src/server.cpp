@@ -9,7 +9,7 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <pthread.h>
-#include "definitions.hpp"
+#include "server.hpp"
 
 #define PORT 8080
 

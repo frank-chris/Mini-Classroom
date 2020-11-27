@@ -1,5 +1,5 @@
-#ifndef DEFINITIONS_HPP
-#define DEFINITIONS_HPP
+#ifndef SERVER_HPP
+#define SERVER_HPP
 
 typedef struct sockets
 {
@@ -9,4 +9,4 @@ typedef struct sockets
 
 void* handle_client(void* arg);
 
-#endif /* DEFINITIONS_HPP */
+#endif /* SERVER_HPP */

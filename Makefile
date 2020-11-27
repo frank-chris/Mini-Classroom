@@ -18,11 +18,11 @@ all: ${S_BIN} ${C_BIN}
 
 ${S_BIN}: ${S_SRCS}
 	@echo "Building..."
-	${CC} -o $@ $^ ${LINKERFLAG} -I .
+	${CC} -o $@ $^ ${LINKERFLAG}
 
 ${C_BIN}: ${C_SRCS}
 	@echo "Building..."
-	${CC} -o $@ $^ -I .
+	${CC} -o $@ $^
 
 clean:
 	@echo "Cleaning..."
