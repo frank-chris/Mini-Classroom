@@ -1,5 +1,5 @@
 # Usage:
-# make 		 # compile all files 
+# make all		 # compile all files 
 # make clean # cleanup
 
 .PHONY = all clean
