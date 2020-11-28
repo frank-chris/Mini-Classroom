@@ -1,21 +1,26 @@
 /*
     client program
 */
-
+#include <iostream>
 #include <stdio.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <string.h>
 #include "client.hpp"
 
-#define PORT 8080
+using namespace std;
+
+int PORT = 8080;
 
 int main(int argc, char const *argv[])
 {
+	if (argc != 3)
+	{
+		cerr<<"Invalid number of arguments"<<endl;
+		exit (-1);
+	}
 	int sock = 0, valread;
+	string serv_ip = argv[1];
+	PORT = atoi(argv[2]);
 	struct sockaddr_in serv_addr;
-	const char *hello = "Hello from client";
+
 	char buffer[1024] = {0};
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
@@ -27,7 +32,7 @@ int main(int argc, char const *argv[])
 	serv_addr.sin_port = htons(PORT);
 	
 	// Convert IPv4 and IPv6 addresses from text to binary form
-	if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0)
+	if(inet_pton(AF_INET, serv_ip.c_str(), &serv_addr.sin_addr)<=0)
 	{
 		printf("\nInvalid address/Address not supported \n");
 		return -1;
@@ -38,9 +43,20 @@ int main(int argc, char const *argv[])
 		printf("\nConnection Failed \n");
 		return -1;
 	}
-	send(sock , hello , strlen(hello) , 0 );
-	printf("Hello message sent\n");
-	valread = read( sock , buffer, 1024);
-	printf("%s\n",buffer );
+
+	user usr;
+	usr.sock = sock;
+	handle_user(usr);
+	//while (1)
+	//{
+		//string hello;
+		//cin>>hello; memset(buffer, '\0', sizeof (buffer));
+		//send(sock , hello.c_str() , hello.length() , 0 );
+		//printf("Hello message sent\n");
+
+		//valread = read( sock , buffer, 1024);
+		//cout<<valread<<endl;
+		//printf("%s\n",buffer );
+	//}
 	return 0;
 }
