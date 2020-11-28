@@ -3,6 +3,20 @@
 
 #define BUF_SIZE 1024
 
+// Prompt messages sent for each state. Note that these defines are of const char[] type, so better
+// convert them to string first
+
+#define HANDLE_CLI "Welcome to Mini-Classroom\n\
+    To log in to an existing account, type: login <username> <password>\n\
+    To create a new account account, type: register <username> <password> <confirm_password>\n"
+
+#define LOGGED_IN "Welcome! You can perform the following actions\
+    To view the list of courses, type: showall\n\
+    To view the list of enrolled courses, type: showmy\n\
+    To create class a new class, type: create <classname>\n\
+    To enroll in an existing class, type: enroll <classname>\n\
+    To join a class, type: join <classname>\n"
+
 typedef struct sockets
 {
     int cli_sock;
@@ -25,6 +39,11 @@ void* new_client_thread(void* arg);
 void handle_client(User *usr);
 int add_user(string username, string passwd);
 int check_credentials(string username, string passwd);
+
+// Data transfer functions
+void recv_data(int cli_sock, string *header, string *data);
+void send_data(int cli_sock, bool ok, string msg);
+void send_file(int cli_sock, string filepath);
 
 // Helper functions
 vector<string> split_string(string s);

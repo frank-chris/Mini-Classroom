@@ -13,17 +13,36 @@ using namespace std;
 
 
 int create_class(string classname){
+    /*
+     * Add instructor to "Classrooms/classname/instructors.txt" 
+     * No personal entry will be made, however, the instructor can access the course related data
+     * of all students enrolled in the course
+     * Create directories named Type 1 and Type 2
+     */
     if(entry_exists("Classrooms/classrooms.txt", classname)){
         return 0;
     }
     create_entry("Classrooms", classname);
     add_to_class(classname, (usr -> name), true); // 0 for instructor, 1 for student
+    string classpath = "Classrooms/" + classname;
+    makedir(classpath, "Type 1");
+    makedir(classpath, "Type 2");
     return 1;
 }
 
 int enroll(string classname){
+    /*
+     * Add student to "Classrooms/classname/students.txt" 
+     * In "Users/username", create an entry for this course
+     *
+     * To be added:
+     * Copy the contents of all assignments, projects, etc that have been created in the class
+     */
     if(entry_exists("Classrooms/classrooms.txt", classname)){
-
+        string username = usr -> name;
+        add_to_class(classname, username, false);
+        string personal_path = "Users/" + username;
+        create_entry(personal_path, classname);
         return 1;
     }
     return 0;
@@ -31,52 +50,40 @@ int enroll(string classname){
 
 void logged_in(User *usr){
     int cli_sock = usr -> cli_sock;
-    string message = "Welcome user " + (usr -> name) + "!\n";
-    int data_sent;
-    if((data_sent = send((usr -> cli_sock), message, message.size(), 0)) != message.size()){
-        perror("send() failed");
-        exit(1); // Replace this with fail message
-        // fail_msg();
-    }
-    string header;
+    string login = LOGGED_IN;
     while(true){
         if((usr -> active) == false){
             break;
         }
-        
-        int data_recv;
-        if((data_recv = recv(cli_sock, header, BUF_SIZE, 0)) < 0){
-            perror("recv() failed");
-            exit(1); //Replace
-        }
 
-        string data = "";
-        string buffer;
-        int data_to_recv = atoi(strings_list[2]);
-        while((data_to_recv > 0) && ((data_recv = recv(cli_sock, buffer, BUF_SIZE, 0)) > 0)){
-            data += buffer;
-            data_to_recv -= data_recv;
-        }
+        string header;
+        string data;
+        recv_data(cli_sock, &header, &data);
         vector<string> strings_list = split_string(header);
+        vector<string> parameters = split_string(data);
+ 
         if(strings_list[0] == "SEND"){
             int num = atoi(strings_list[1]);
             if(num == 0){
                 int ret_val = create_class(data);
                 if(ret_val == 0){
-                    send_resp(0, "Classroom already exists");
+                    send_data(cli_sock, 0, login);
+                    continue;
                 }
                 else{
-                    send_resp(1, "Classroom created!");
+                    send_data(cli_sock, 1, login);
+                    continue;
                 }
             }
             else if(num == 1){
                 int ret_val = enroll(data);
                 if(ret_val == 0){
-                    send_resp(0, "Classroom does not exist");
+                    send_data(cli_sock, 0, login);
+                    continue;
                 }
                 else{
-                    string resp = "Enrolled in Class " + data;
-                    send_resp(1, resp);
+                    send_data(cli_sock, 1, login);
+                    continue;
                 }
             }
         }

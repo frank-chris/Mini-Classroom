@@ -30,7 +30,7 @@ bool entry_exists(string file, string query){
     return false;
 }
 
-// Creates a new directory with name, also adds an entry name to file..
+// Creates a new directory with name, also adds an entry name to file.
 void create_entry(string directory, string file, string name){
     makedir(directory, name);
     
@@ -63,5 +63,12 @@ void add_to_class(string classname, string username, bool instructor){
         string path = "Classrooms/" + classname;
         ofstream outfile;
         string file = path + "/" + "instructors.txt";
+    }
+    else{
+        string path = "Classrooms/" + classname;
+        ofstream outfile;
+        string file = path + "/" + "students.txt";
+        path = "Users/" + username;
+        makedir()
     }
 }
