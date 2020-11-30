@@ -40,7 +40,7 @@ void register_user(user usr)
 
     while (!valid)
     {
-        cout << "Password:    "<<flush;
+        cout << "Password:    " << flush;
         password = "";
 
         ch = '\0';
@@ -54,7 +54,7 @@ void register_user(user usr)
         }
         cout << endl;
 
-        cout << "Retype Password:    "<<flush;
+        cout << "Retype Password:    " << flush;
         password_temp = "";
 
         ch = '\0';
@@ -69,7 +69,10 @@ void register_user(user usr)
         cout << endl;
 
         if (password_temp != password)
+        {
+            cout << "==========>  " << flush;
             cout << "Passwords don't match" << endl;
+        }
 
         else
             valid = true;

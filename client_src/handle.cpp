@@ -11,8 +11,20 @@ int get_response(user usr)
     if (num_bytes < 0)
         perror("send error");
     buffer[num_bytes] = '\0';
-    cout<<"\nReceived some data\n";
+
     vector<string> keys = split_string(buffer);
+
+    if (keys[0] == "OK")
+    {
+        cout << "Successful" << endl;
+    }
+    else
+    {
+        cout << "Failed" << endl;
+    }
+    cout << "--------------------------\n\n"
+         << endl;
+
     int len = atoi(keys[1].c_str());
 
     int rec_bytes = 0;
@@ -62,29 +74,39 @@ int send_file(user usr, string path, int len)
 void handle_command(user usr)
 {
     string command;
-    cout<<"Enter a command:    "<<flush;
+    cout << "Enter a command:    " << flush;
     getline(cin, command);
-
 
     bool valid = true;
 
-    do{
+    do
+    {
         valid = true;
-    //Logging
-        if (command == "login") login_user(usr);
-        else if (command == "register") register_user(usr);
+        //Logging
+        if (command == "login")
+            login_user(usr);
+        else if (command == "register")
+            register_user(usr);
 
-    //Entering
-        else if (command == "create") create_classroom(usr);
-        else if (command == "showall") get_all_courses(usr);
-        else if (command == "enroll") enrol_classroom(usr);
-        else if (command == "join") enter_classroom(usr);
-        else if (command == "showmy") get_joined_courses(usr);
+        //Entering
+        else if (command == "create")
+            create_classroom(usr);
+        else if (command == "showall")
+            get_all_courses(usr);
+        else if (command == "enroll")
+            enrol_classroom(usr);
+        else if (command == "join")
+            enter_classroom(usr);
+        else if (command == "showmy")
+            get_joined_courses(usr);
 
-    //Instructor
-        else if (command == "classwork") get_classwork(usr);
-        else if (command == "people") get_people(usr);
-        else if (command == "showmy") get_joined_courses(usr);
+        //Instructor
+        else if (command == "classwork")
+            get_classwork(usr);
+        else if (command == "people")
+            get_people(usr);
+        else if (command == "showmy")
+            get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);
@@ -99,13 +121,12 @@ void handle_command(user usr)
         // get_classwork(usr);
         // exit_class(usr);
 
-        else {
+        else
+        {
             valid = false;
-            cout<<"Invalid command"<<endl;
+            cout << "Invalid command" << endl;
         }
     } while (valid == false);
-  
-  
 }
 
 void handle_user(user usr)
@@ -113,13 +134,14 @@ void handle_user(user usr)
     char buffer[BUFSIZE + 1];
     memset(buffer, '\0', sizeof(buffer));
     int num_bytes = 0;
+    cout << "\nConnecting..." << endl;
+    cout << "==========>  " << flush;
+    get_response(usr);
+
     while (1)
     {
-        get_response(usr);
-        cout<<"\nGot response\n";
         handle_command(usr);
-        cout<<"\nHandled client\n";
+        cout << "==========>  " << flush;
         get_response(usr);
-        cout<<"\nGot response2\n";
     }
 }
