@@ -42,6 +42,7 @@ void* new_client_thread(void* arg);
 void handle_client(User *usr);
 int add_user(string username, string passwd);
 int check_credentials(string username, string passwd);
+void logged_in(User *usr);
 
 // Data transfer functions
 void recv_data(int cli_sock, string &header, string &data);

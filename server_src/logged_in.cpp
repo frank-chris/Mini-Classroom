@@ -12,7 +12,7 @@
 using namespace std;
 
 
-int create_class(string classname){
+int create_class(string classname, string username){
     /*
      * Create the entry for classname in "Classrooms"
      * Add instructor to "Classrooms/classname/instructors.txt" 
@@ -23,11 +23,10 @@ int create_class(string classname){
     if(entry_exists("Classrooms/classrooms.txt", classname)){
         return 0;
     }
-    string username = usr -> name;
     create_entry("Classrooms", "Classrooms/classrooms.txt", classname);
     string classpath = "Classrooms/" + classname;
-    create_file(classpath + "/instructors.txt");
-    create_file(classpath + "/students.txt");
+    create_file(classpath, "/instructors.txt");
+    create_file(classpath, "/students.txt");
     add_to_file(classpath + "/instructors.txt", username);
     makedir(classpath, "Type 1");
     makedir(classpath, "Type 2");
@@ -37,7 +36,7 @@ int create_class(string classname){
     return 1;
 }
 
-int enroll(string classname){
+int enroll(string classname, string username){
     /*
      * Add student to "Classrooms/classname/students.txt" 
      * In "Users/username", create an entry for this course
@@ -46,7 +45,7 @@ int enroll(string classname){
      * Copy the contents of all assignments, projects, etc that have been created in the class
      */
     if(entry_exists("Classrooms/classrooms.txt", classname)){
-        string username = usr -> name;
+        string classpath = "Classrooms/" + classname;
         add_to_file(classpath + "/students.txt", username);
         string personal_path = "Users/" + username;
         string courses_file = personal_path + "/courses.txt";
@@ -71,9 +70,9 @@ void logged_in(User *usr){
         vector<string> strings_list = split_string(header);
  
         if(strings_list[0] == "SEND"){
-            int num = atoi(strings_list[1]);
+            int num = atoi(strings_list[1].c_str());
             if(num == 0){
-                int ret_val = create_class(data);
+                int ret_val = create_class(data, username);
                 if(ret_val == 0){
                     send_data(cli_sock, 0, login);
                     continue;
@@ -84,7 +83,7 @@ void logged_in(User *usr){
                 }
             }
             else if(num == 1){
-                int ret_val = enroll(data);
+                int ret_val = enroll(data, username);
                 if(ret_val == 0){
                     send_data(cli_sock, 0, login);
                     continue;
@@ -96,7 +95,7 @@ void logged_in(User *usr){
             }
         }
         else if(strings_list[0] == "ASK"){
-            int num = atoi(strings_list[1]);
+            int num = atoi(strings_list[1].c_str());
             if(num == 0){
                 // Read classrooms.txt, append login to it
                 string res = "List of all courses available-\n";

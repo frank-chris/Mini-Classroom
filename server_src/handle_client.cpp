@@ -46,7 +46,7 @@ void handle_client(User *usr){
         string username = parameters[0];
         string passwd = parameters[1];
         if(strings_list[0] == "SEND"){
-            int num = atoi(strings_list[1]);
+            int num = atoi(strings_list[1].c_str());
             if(num == 0){
                 int ret_val = check_credentials(username, passwd);
                 if(ret_val == 1){
