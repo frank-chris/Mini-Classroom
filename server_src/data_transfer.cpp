@@ -6,6 +6,10 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <pthread.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/sendfile.h>
 #include "server.hpp"
 
 using namespace std;
@@ -53,6 +57,37 @@ void send_data(int cli_sock, bool ok, string msg){
     }
 }
 
-void send_file(int cli_sock, string filepath){
-    // fopen(filepath.c_str());
+void send_file(int cli_sock, bool ok, string filepath){
+    string code;
+    if(ok){
+        code = "OK";
+    }
+    else{
+        code = "NOK";
+    }
+    FILE * fptr = fopen(filepath.c_str(), "r");
+    if(fptr == NULL){
+        printf("Filepath %s does not exists.\n", filepath.c_str());
+        // But this has probably already been handled at an upper level
+    }
+    fseek(fptr, 0L, SEEK_END);
+    long int filesize = ftell(fptr);
+    rewind(fptr);
+    if(fclose(fptr) != 0){
+        perror("fclose() failed");
+    }
+    string len = to_string(filesize);
+    string resp = code + SPLITTER + len;
+    if(send(cli_sock, resp.c_str(), BUF_SIZE, 0) < 0){
+        perror("send() failed");
+    }
+    int fd = open(filepath.c_str(), O_RDONLY);
+    int trials = 3; // 3 chances to send the file
+    while(sendfile(cli_sock, fd, NULL, filesize) != filesize){
+        perror("sendfile() failed");
+        if(trials-- <= 0){
+            break;
+        }
+    }
+    close(fd);
 }
