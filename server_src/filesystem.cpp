@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <iostream>
+#include "server.hpp"
 
 using namespace std;
 

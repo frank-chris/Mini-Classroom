@@ -63,7 +63,7 @@ void show_classwork(int cli_sock, string classname){
     res += "--------------\n";
 
     // open type_2 directory
-    DIR * dp = opendir(type_2.c_str());
+    dp = opendir(type_2.c_str());
     
     // check if directory was opened
     if(dp == NULL){
@@ -71,7 +71,7 @@ void show_classwork(int cli_sock, string classname){
     }
 
     // loop through the entries of the type_2 directory
-    struct dirent *d;
+
     while ((d = readdir(dp)) != NULL) {
         // ignore if entry is . or ..
         if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, "..")){
@@ -134,6 +134,10 @@ void view_classroom_update(int cli_sock, int type, string category, string updat
     res += "\n--------------\n";
     res += STUDENT;
     send_data(cli_sock, true, res);
+}
+
+void download_file(int cli_sock, string category, string update_name, string classname){
+    
 }
 
 void student(User* usr, string classname){

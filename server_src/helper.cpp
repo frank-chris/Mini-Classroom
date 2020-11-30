@@ -5,12 +5,12 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <pthread.h>
-#include "server.hpp"
 #include <iostream>
 #include <sstream>
 #include <iterator>
 #include <string>
 #include <fstream>
+#include "server.hpp"
 
 using namespace std;
 

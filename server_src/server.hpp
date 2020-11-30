@@ -1,6 +1,11 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+using namespace std;
+
+#include <string>
+#include <vector>
+
 #define SPLITTER '|'
 #define BUF_SIZE 1024
 
