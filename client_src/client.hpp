@@ -24,6 +24,7 @@ void handle_user(user);
 char * join_str_int(char *, int);
 vector <string> split_string(string);
 int get_response(user);
+int send_request(user, char *, string, int );
 
 //logging
 void login_user (user);

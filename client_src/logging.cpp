@@ -10,14 +10,9 @@ void login_user(user usr){
     int len = username.length() + password.length() + 1;
     char sub_header [1024] = "SEND|0|";
     char * header = join_str_int(sub_header, len);
-
-    int num_bytes = send(usr.sock, header, 1024, 0);
-    if (num_bytes<0) perror("send error");
-
     string cred = username + delim + password;
-    num_bytes = send (usr.sock, cred.c_str(), len, 0);
-    if (num_bytes<0) perror ("send error");
-    cout<<cred<<endl;
+
+    send_request (usr, header, cred, len);
 }
 
 void register_user (user usr){
@@ -38,9 +33,7 @@ void register_user (user usr){
     int len = username.length() + password.length() + 1;
     char sub_header [1024] = "SEND|1|";
     char * header = join_str_int(sub_header, len);
+    string cred = username + delim + password;
 
-    int num_bytes = send(usr.sock, header, 1024, 0);
-    if (num_bytes<0) perror("send error");
-
-    num_bytes = send (usr.sock, (username + string (1, delim) + password).c_str(), len, 0);
+    send_request (usr, header, cred, len);
 }

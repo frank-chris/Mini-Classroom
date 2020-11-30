@@ -17,9 +17,23 @@ int get_response(user usr){
         buffer[num_bytes] = '\0';
         if (num_bytes < 0)  perror ("send error");
         rec_bytes += num_bytes;
+        cout<<buffer<<flush;
     }
+    cout<<endl;
 }
 
+int send_request(user usr, char * header, string data, int len){
+
+    int num_bytes = send(usr.sock, header, 1024, 0);
+    if (num_bytes<0) { perror("send error"); return -1; }
+
+    if (len){
+        num_bytes = send (usr.sock, data.c_str(), len, 0);
+        if (num_bytes<0) { perror ("send error"); return -1; }
+    }
+
+    return 0;
+}
 
 void handle_command(user usr){
 
