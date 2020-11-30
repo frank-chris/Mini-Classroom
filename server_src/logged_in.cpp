@@ -14,19 +14,24 @@ using namespace std;
 
 int create_class(string classname){
     /*
+     * Create the entry for classname in "Classrooms"
      * Add instructor to "Classrooms/classname/instructors.txt" 
-     * No personal entry will be made, however, the instructor can access the course related data
+     * An empty personal directory for the course will be made, however, the instructor can access the course related data
      * of all students enrolled in the course
      * Create directories named Type 1 and Type 2
      */
     if(entry_exists("Classrooms/classrooms.txt", classname)){
         return 0;
     }
-    create_entry("Classrooms", classname);
-    add_to_class(classname, (usr -> name), true); // 0 for instructor, 1 for student
+    string username = usr -> name;
+    create_entry("Classrooms", "Classrooms/classrooms.txt", classname);
+    add_to_class(classname, username, true); // 0 for instructor, 1 for student
     string classpath = "Classrooms/" + classname;
     makedir(classpath, "Type 1");
     makedir(classpath, "Type 2");
+    string personal_path = "Users/" + username;
+    string courses_file = personal_path + "/courses.txt";
+    create_entry(personal_path, courses_file, classname);
     return 1;
 }
 
@@ -42,7 +47,8 @@ int enroll(string classname){
         string username = usr -> name;
         add_to_class(classname, username, false);
         string personal_path = "Users/" + username;
-        create_entry(personal_path, classname);
+        string courses_file = personal_path + "/courses.txt";
+        create_entry(personal_path, courses_file, classname);
         return 1;
     }
     return 0;
@@ -50,6 +56,7 @@ int enroll(string classname){
 
 void logged_in(User *usr){
     int cli_sock = usr -> cli_sock;
+    string username = usr -> name;
     string login = LOGGED_IN;
     while(true){
         if((usr -> active) == false){
@@ -58,9 +65,8 @@ void logged_in(User *usr){
 
         string header;
         string data;
-        recv_data(cli_sock, &header, &data);
+        recv_data(cli_sock, header, data);
         vector<string> strings_list = split_string(header);
-        vector<string> parameters = split_string(data);
  
         if(strings_list[0] == "SEND"){
             int num = atoi(strings_list[1]);
@@ -91,12 +97,38 @@ void logged_in(User *usr){
             int num = atoi(strings_list[1]);
             if(num == 0){
                 // Read classrooms.txt, append login to it
+                string res = "List of all courses available-\n";
+                res += file_contents("Classrooms/classrooms.txt");
+                res += "--------------\n";
+                res += LOGGED_IN;
+                send_data(cli_sock, true, res);
             }
             else if(num == 1){
                 // Enter a classroom
+                string classname = data;
+                string user_courses = "Users/" + username + "/courses.txt";
+                if(entry_exists(user_courses, classname)){
+                    string instructor_path = "Classrooms/" + classname + "instructors.txt";
+                    if(entry_exists(instructor_path, username)){
+                        // Goto instructor state
+                        // Display state message
+                    }
+                    string student_path = "Classrooms/" + classname + "students.txt";
+                    if(entry_exists(student_path, username)){
+                        // Goto student state
+                        // Display state message
+                    }
+                }
             }
             else if(num == 2){
                 // Get a list of courses joined
+                string res = "List of joined courses-\n";
+                string filename = "Users/" + username + "/courses.txt";
+                res += file_contents(filename);
+                res += "--------------\n";
+                res += LOGGED_IN;
+                send_data(cli_sock, true, res);
+                
             }
         }
     }

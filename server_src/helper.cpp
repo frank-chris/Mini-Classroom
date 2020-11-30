@@ -7,14 +7,17 @@
 #include <pthread.h>
 #include "server.hpp"
 #include <iostream>
+#include <sstream>
+#include <iterator>
+#include <string>
 #include <fstream.h>
 
 using namespace std;
 
 vector<string> split_string(string s){
     stringstream ss(s);
-    inp_str_it<string> begin(ss);
-    inp_str_it<string> end;
+    istream_iterator<string> begin(ss);
+    istream_iterator<string> end;
     vector<string> v(begin, end);
     return v;
 }
@@ -72,3 +75,14 @@ void add_to_class(string classname, string username, bool instructor){
         makedir()
     }
 }
+
+string file_contents(string filename){
+    ifstream infile(filename);
+    string res = "";
+    string buf;
+    while(infile >> buf){
+        res += buf;
+    }
+    return res;
+}
+

@@ -14,7 +14,7 @@ int add_user(string username, string passwd){
     if(entry_exists("Users/users.txt", username)){
         return 0;
     }
-    create_entry("Users", username);
+    create_entry("Users", "Users/users.txt", username);
     add_pair(username, passwd);
     return 1;
 }
@@ -40,7 +40,7 @@ void handle_client(User *usr){
         string header;
         string data;
         int data_recv;
-        recv_data(cli_sock, &header, &data);
+        recv_data(cli_sock, header, data);
         vector<string> strings_list = split_string(header);
         vector<string> parameters = split_string(data);
         string username = parameters[0];

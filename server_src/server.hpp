@@ -10,12 +10,14 @@
     To log in to an existing account, type: login \n\
     To create a new account account, type: register\n"
 
-#define LOGGED_IN "Welcome! You can perform the following actions\
+#define LOGGED_IN "You are logged in, you can perform the following actions\
     To view the list of courses, type: showall\n\
     To view the list of enrolled courses, type: showmy\n\
     To create class a new class, type: create \n\
     To enroll in an existing class, type: enroll \n\
     To join a class, type: join \n"
+
+#include <bits/stdc++.h>
 
 typedef struct sockets
 {
@@ -41,7 +43,7 @@ int add_user(string username, string passwd);
 int check_credentials(string username, string passwd);
 
 // Data transfer functions
-void recv_data(int cli_sock, string *header, string *data);
+void recv_data(int cli_sock, string &header, string &data);
 void send_data(int cli_sock, bool ok, string msg);
 
 // Helper functions
@@ -50,5 +52,6 @@ bool entry_exists(string file, string query);
 void create_entry(string directory, string file, string name);
 void add_pair(string username, string passwd);
 bool check_pair(string username, string passwd);
+string file_contents(string filename); // Only those files that have a single word in every line
 
 #endif /* SERVER_HPP */

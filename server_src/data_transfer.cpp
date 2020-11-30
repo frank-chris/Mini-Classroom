@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void recv_data(int cli_sock, string *header, string *data){
+void recv_data(int cli_sock, string &header, string &data){
     int data_recv;
     if((data_recv = recv(cli_sock, header, BUF_SIZE, 0)) < 0){
         perror("recv() failed");
