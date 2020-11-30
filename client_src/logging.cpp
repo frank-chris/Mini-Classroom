@@ -35,15 +35,15 @@ void register_user(user usr)
     cout << "Username:    ";
     cin >> username;
     bool valid = false;
-    char ch = '\0';
+    char ch;
+    cin.ignore();
 
-    while (valid)
+    while (!valid)
     {
-        cout << "Password:    ";
+        cout << "Password:    "<<flush;
         password = "";
 
         ch = '\0';
-        cin.ignore();
         while (1)
         {
             ch = getch_pwd();
@@ -54,7 +54,7 @@ void register_user(user usr)
         }
         cout << endl;
 
-        cout << "Retype Password:    ";
+        cout << "Retype Password:    "<<flush;
         password_temp = "";
 
         ch = '\0';

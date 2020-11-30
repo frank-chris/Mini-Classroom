@@ -49,7 +49,7 @@ void view_particular_submission(user);
 void view_post(user);
 void download_file(user);
 void get_people(user);
-void get_classword(user);
+void get_classwork(user);
 void exit_class(user);
 
 #endif /* CLIENT_HPP */

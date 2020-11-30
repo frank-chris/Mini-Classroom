@@ -61,9 +61,48 @@ int send_file(user usr, string path, int len)
 
 void handle_command(user usr)
 {
+    string command;
+    cout<<"Enter a command:    "<<flush;
+    getline(cin, command);
 
-    login_user(usr);
-    ;
+    bool valid = true;
+
+    do{
+        valid = true;
+    //Logging
+        if (command == "login") login_user(usr);
+        else if (command == "register") register_user(usr);
+
+    //Entering
+        else if (command == "create") create_classroom(usr);
+        else if (command == "showall") get_all_courses(usr);
+        else if (command == "enroll") enrol_classroom(usr);
+        else if (command == "join") enter_classroom(usr);
+        else if (command == "showmy") get_joined_courses(usr);
+
+    //Instructor
+        else if (command == "classwork") get_classwork(usr);
+        else if (command == "people") get_people(usr);
+        else if (command == "showmy") get_joined_courses(usr);
+        else if (command == "showmy") get_joined_courses(usr);
+        else if (command == "showmy") get_joined_courses(usr);
+        else if (command == "showmy") get_joined_courses(usr);
+        else if (command == "showmy") get_joined_courses(usr);
+        else if (command == "showmy") get_joined_courses(usr);
+        //create_post(usr);
+        //view_all_submissions(usr);
+        //view_particular_submission(usr);
+        //view_post(usr);
+        // download_file(usr);
+        //get_people(usr);
+        // get_classwork(usr);
+        // exit_class(usr);
+
+        else {
+            valid = false;
+            cout<<"Invalid command"<<endl;
+        }
+    } while (valid == false);
 }
 
 void handle_user(user usr)

@@ -15,6 +15,11 @@ void create_post(user usr)
 
     for (int i = 0; i < num_files; i++)
     {
+        cout << "Enter File ";
+        cout << i + 1;
+        cout << ":    ";
+        cout << flush;
+
         string temp;
         cin >> temp;
         file_names.push_back(temp);
@@ -24,10 +29,11 @@ void create_post(user usr)
     cin >> deadline;
     cout << "Assignment Name:    " << flush;
     cin >> assignment_name;
+    cin.ignore();
     cout << "Description:    " << flush;
-    cin >> desc;
+    getline(cin, desc);
 
-    string to_send = type + delim + category + to_string(num_files) + delim;
+    string to_send = type + delim + category + delim + to_string(num_files) + delim;
     for (int i = 0; i < num_files; i++)
     {
         to_send = to_send + file_names[i] + delim;
@@ -40,6 +46,11 @@ void create_post(user usr)
     char *header = join_str_int(sub_header, len);
 
     send_request(usr, header, to_send, len);
+    get_response(usr);
+    for (int i = 0; i < num_files; i++)
+    {
+        upload_file(usr);
+    }
 }
 
 void upload_file(user usr)
@@ -51,7 +62,7 @@ void upload_file(user usr)
     if (len == -1)
         return;
 
-    char sub_header[1024] = "SEND|1|";
+    char sub_header[1024] = "SEND|0|";
     char *header = join_str_int(sub_header, len);
 
     send_request(usr, header, "", len);
