@@ -55,7 +55,7 @@ void student(User* usr, string classname);
 void instructor(User* usr, string classname);
 void show_people_list(int cli_sock, string classname);
 void show_classwork(int cli_sock, string classname);
-
+void view_classroom_update(int cli_sock, int type, string category, string update_name, string classname);
 
 // Data transfer functions
 void recv_data(int cli_sock, string &header, string &data);

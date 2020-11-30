@@ -14,8 +14,8 @@ using namespace std;
 
 void show_classwork(int cli_sock, string classname){
 
-    string type_1 = "Classrooms/" + classname + "type_1/";
-    string type_2 = "Classrooms/" + classname + "type_2/";
+    string type_1 = "Classrooms/" + classname + "/type_1/";
+    string type_2 = "Classrooms/" + classname + "/type_2/";
     
     string res = "Classwork-\n";
     res += "--------------\n";
@@ -107,8 +107,8 @@ void show_classwork(int cli_sock, string classname){
 }
 
 void show_people_list(int cli_sock, string classname){
-    string student_path = "Classrooms/" + classname + "students.txt";
-    string instructor_path = "Classrooms/" + classname + "instructors.txt";
+    string student_path = "Classrooms/" + classname + "/students.txt";
+    string instructor_path = "Classrooms/" + classname + "/instructors.txt";
 
     string res = "People-\n";
     res += "--------------\n";
@@ -118,6 +118,20 @@ void show_people_list(int cli_sock, string classname){
     res += "Students-\n\n";
     res += file_contents(student_path);
     res += "--------------\n";
+    res += STUDENT;
+    send_data(cli_sock, true, res);
+}
+
+void view_classroom_update(int cli_sock, int type, string category, string update_name, string classname){
+    string path;
+    if(type == 1){
+        path = "Classrooms/" + classname + "/type_1/" + category + "/" + update_name;
+    }
+    else if(type == 2){
+        path = "Classrooms/" + classname + "/type_2/" + category + "/" + update_name;
+    }
+    string res = file_contents(path + "/display_text.txt");
+    res += "\n--------------\n";
     res += STUDENT;
     send_data(cli_sock, true, res);
 }
@@ -135,9 +149,9 @@ void student(User* usr, string classname){
         string data;
         recv_data(cli_sock, header, data);
         vector<string> strings_list = split_string(header);
-
+        vector<string> data_list = split_string(data);
         if(strings_list[0] == "SEND"){
-            int num = atoi(strings_list[1].c_str());
+            int num = stoi(strings_list[1]);
             if(num == 0){
                 
             }
@@ -146,9 +160,12 @@ void student(User* usr, string classname){
             }
         }
         else if(strings_list[0] == "ASK"){
-            int num = atoi(strings_list[1].c_str());
+            int num = stoi(strings_list[1]);
             if(num == 0){
-                
+                int type = stoi(data_list[0]);
+                string category = data_list[1];
+                string update_name = data_list[2];
+                view_classroom_update(cli_sock, type, category, update_name, classname);
             }
             else if(num == 1){
                 
@@ -160,10 +177,10 @@ void student(User* usr, string classname){
                 
             }
             else if(num == 4){
-                
+                show_people_list(cli_sock, classname);
             }
             else if(num == 5){
-                
+                show_classwork(cli_sock, classname);
             }
             else if(num == 6){
                 
