@@ -47,6 +47,7 @@ void create_post(user usr)
 
     send_request(usr, header, to_send, len);
     get_response(usr);
+
     for (int i = 0; i < num_files; i++)
     {
         upload_file(usr);
@@ -141,6 +142,8 @@ void download_file(user usr)
     char *header = join_str_int(sub_header, len);
 
     send_request(usr, header, to_send, len);
+    string file_name = category + "_" + assignment_name + "_" + student;
+    get_response_file(usr, file_name);
 }
 
 void get_people(user usr)

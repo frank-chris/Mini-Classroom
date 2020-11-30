@@ -4,6 +4,52 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+int get_response_file(user usr, string file_name)
+{
+    char buffer[BUFSIZE + 1];
+    int num_bytes = read(usr.sock, buffer, BUFSIZE);
+    if (num_bytes < 0)
+        perror("send error");
+    buffer[num_bytes] = '\0';
+
+    vector<string> keys = split_string(buffer);
+
+    if (keys[0] == "OK")
+    {
+        cout << "Successful" << endl;
+    }
+    else
+    {
+        cout << "Failed" << endl;
+    }
+    cout << "--------------------------\n\n"
+         << endl;
+
+    int len = atoi(keys[1].c_str());
+    system("mkdir downloads");
+    file_name = "downloads/" + file_name;
+    FILE *fp = fopen(file_name.c_str(), "w");
+    if (!fp)
+    {
+        perror("fopen error");
+        return -1;
+    }
+
+    int rec_bytes = 0;
+    while (rec_bytes < len)
+    {
+        num_bytes = read(usr.sock, buffer, min(BUFSIZE, len - rec_bytes));
+        buffer[num_bytes] = '\0';
+        if (num_bytes < 0)
+            perror("send error");
+        rec_bytes += num_bytes;
+        fwrite(buffer, 1, num_bytes, fp);
+    }
+    cout << endl;
+
+    return 0;
+}
+
 int get_response(user usr)
 {
     char buffer[BUFSIZE + 1];
@@ -38,6 +84,8 @@ int get_response(user usr)
         cout << buffer << flush;
     }
     cout << endl;
+
+    return 0;
 }
 
 int send_request(user usr, char *header, string data, int len)
@@ -69,18 +117,24 @@ int send_file(user usr, string path, int len)
     int num_bytes = sendfile(usr.sock, read_fd, NULL, BUFSIZE);
     cout << "Total Bytes Sent: " << num_bytes << endl;
     cout << "Total Bytes Expected to be sent: " << len << endl;
+
+    return 0;
 }
 
 void handle_command(user usr)
 {
     string command;
-    cout << "Enter a command:    " << flush;
-    getline(cin, command);
 
     bool valid = true;
 
     do
     {
+        cout << "Enter a command:    " << flush;
+        do
+        {
+            getline(cin, command);
+        } while (command == "");
+
         valid = true;
         //Logging
         if (command == "login")
