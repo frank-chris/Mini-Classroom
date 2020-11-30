@@ -56,6 +56,7 @@ int enroll(string classname, string username){
 }
 
 void logged_in(User *usr){
+    cout<<"\nUser "<<usr->name<<" logged in\n";
     int cli_sock = usr -> cli_sock;
     string username = usr -> name;
     string login = LOGGED_IN;
@@ -72,6 +73,7 @@ void logged_in(User *usr){
         if(strings_list[0] == "SEND"){
             int num = atoi(strings_list[1].c_str());
             if(num == 0){
+                cout<<"\nCreating a course\n";
                 int ret_val = create_class(data, username);
                 if(ret_val == 0){
                     send_data(cli_sock, 0, login);
@@ -83,6 +85,7 @@ void logged_in(User *usr){
                 }
             }
             else if(num == 1){
+                cout<<"\nEnrolling in a course\n";
                 int ret_val = enroll(data, username);
                 if(ret_val == 0){
                     send_data(cli_sock, 0, login);
@@ -97,6 +100,7 @@ void logged_in(User *usr){
         else if(strings_list[0] == "ASK"){
             int num = atoi(strings_list[1].c_str());
             if(num == 0){
+                cout<<"\nDisplaying all courses\n";
                 // Read classrooms.txt, append login to it
                 string res = "List of all courses available-\n";
                 res += file_contents("Classrooms/classrooms.txt");
@@ -106,6 +110,7 @@ void logged_in(User *usr){
             }
             else if(num == 1){
                 // Enter a classroom
+                cout<<"\nEntering a course\n";
                 string classname = data;
                 string user_courses = "Users/" + username + "/courses.txt";
                 if(entry_exists(user_courses, classname)){

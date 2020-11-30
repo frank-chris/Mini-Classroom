@@ -136,14 +136,27 @@ void view_classroom_update(int cli_sock, int type, string category, string updat
     send_data(cli_sock, true, res);
 }
 
-void download_file(int cli_sock, string category, string update_name, string classname){
-    
+void download_attachment(int cli_sock, int type, string category, string update_name, string classname, string filename){
+    string path;
+    if(type == 1){
+        path = "Classrooms/" + classname + "/type_1/" + category + "/" + update_name + "/" + filename;
+    }
+    else if(type == 2){
+        path = "Classrooms/" + classname + "/type_2/" + category + "/" + update_name + "/" + filename;
+    }
+
+    // TODO: 
+
 }
+
+
 
 void student(User* usr, string classname){
     int cli_sock = usr -> cli_sock;
     string username = usr -> name;
 
+    cout<<"\nStudent state\n";
+    
     while(true){
         if((usr -> active) == false){
             break;
@@ -178,7 +191,11 @@ void student(User* usr, string classname){
                 
             }
             else if(num == 3){
-                
+                int type = stoi(data_list[0]);
+                string category = data_list[1];
+                string update_name = data_list[2];
+                string filename = data_list[3];
+                download_attachment(cli_sock, type, category, update_name, classname, filename);
             }
             else if(num == 4){
                 show_people_list(cli_sock, classname);

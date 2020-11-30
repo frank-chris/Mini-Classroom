@@ -17,17 +17,14 @@ using namespace std;
 
 void* new_client_thread(void* arg){
     sockets* socks = (sockets*)arg;
-    User usr;;
+    User* usr = (User*)malloc(sizeof(User));
 
-    int valread;
-    const char *hello = "Hello from server";
-    char buffer[BUF_SIZE] = {0};
+	usr->cli_sock = socks->cli_sock;
+	usr->active = true;
 
-    valread = read(socks->cli_sock, buffer, BUF_SIZE); 
-	printf("%s\n", buffer); 
-	send(socks->cli_sock, hello, strlen(hello), 0); 
-	printf("Hello message sent\n"); 
-    handle_client(&usr);
+	cout<<"\nThread spawned\n";
+	
+    handle_client(usr);
 }
 
 int main(int argc, char const *argv[])
@@ -62,6 +59,8 @@ int main(int argc, char const *argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	cout<<"\nListening on "<<PORT<<"\n";
+
     while (true)
     {
         if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
@@ -69,6 +68,7 @@ int main(int argc, char const *argv[])
             perror("accept");
             exit(EXIT_FAILURE);
         }
+		cout<<"\nClient: "<<new_socket<<" connected\n";
         pthread_t new_thread;
         sockets* socks = (sockets *)(malloc(sizeof(sockets)));
         socks->cli_sock = new_socket;

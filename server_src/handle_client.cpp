@@ -29,6 +29,7 @@ int check_credentials(string username, string passwd){
 
 
 void handle_client(User *usr){
+    cout<<"\nHandling client\n";
     int cli_sock = usr -> cli_sock;
     string message = HANDLE_CLI;
     send_data(cli_sock, true, message);
@@ -57,6 +58,7 @@ void handle_client(User *usr){
                 }
                 else if(ret_val == 0){
                     send_data(cli_sock, false, message); // Not sending a good response
+                    cout<<"\nLogin failed\n";
                 }
             }
             else if(num == 1){

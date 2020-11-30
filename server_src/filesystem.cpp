@@ -14,6 +14,7 @@ void initFS(){
     create_file("Users", "users.txt");
     create_file("Users", "pairs.txt");
     create_file("Classrooms", "classrooms.txt");
+    cout<<"\nInitialized filesystem\n";
 }
 
 void makedir(string path, string dirname){
