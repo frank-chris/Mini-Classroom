@@ -1,46 +1,84 @@
 #include "client.hpp"
 
-void login_user(user usr){
-    string username, password; 
-    cout<<"Username:    ";    cin>>username;
-    system ("stty -echo");
-    cout<<"Password:    ";    cin>>password;
-    system ("stty echo");   cout<<endl;
+void login_user(user usr)
+{
+    string username, password;
+    cout << "Username:    ";
+    cin >> username;
+    cout << "Password:    ";
+    password = "";
+
+    char ch = '\0';
+    cin.ignore();
+    while (1)
+    {
+
+        ch = getch_pwd();
+        if (ch == '\n')
+            break;
+        password = password + ch;
+        cout << "*" << flush;
+    }
+    cout << endl;
 
     int len = username.length() + password.length() + 1;
-    char sub_header [1024] = "SEND|0|";
-    char * header = join_str_int(sub_header, len);
-
-    int num_bytes = send(usr.sock, header, 1024, 0);
-    if (num_bytes<0) perror("send error");
-
+    char sub_header[1024] = "SEND|0|";
+    char *header = join_str_int(sub_header, len);
     string cred = username + delim + password;
-    num_bytes = send (usr.sock, cred.c_str(), len, 0);
-    if (num_bytes<0) perror ("send error");
-    cout<<cred<<endl;
+
+    send_request(usr, header, cred, len);
 }
 
-void register_user (user usr){
+void register_user(user usr)
+{
     string username, password, password_temp;
-    cout<<"Username:    ";    cin>>username;
+    cout << "Username:    ";
+    cin >> username;
     bool valid = false;
-    while (valid) 
+    char ch = '\0';
+
+    while (valid)
     {
-        system ("stty -echo");
-        cout<<"Password:    ";    cin>>password;
-        cout<<"Retype Password:    "; cin>>password_temp;
-        system ("stty echo");   cout<<endl;
+        cout << "Password:    ";
+        password = "";
+
+        ch = '\0';
+        cin.ignore();
+        while (1)
+        {
+            ch = getch_pwd();
+            if (ch == '\n')
+                break;
+            password = password + ch;
+            cout << "*" << flush;
+        }
+        cout << endl;
+
+        cout << "Retype Password:    ";
+        password_temp = "";
+
+        ch = '\0';
+        while (1)
+        {
+            ch = getch_pwd();
+            if (ch == '\n')
+                break;
+            password_temp = password_temp + ch;
+            cout << "*" << flush;
+        }
+        cout << endl;
+
         if (password_temp != password)
-            cout<<"Passwords don't match"<<endl;
-        else valid = true;
+            cout << "Passwords don't match" << endl;
+
+        else
+            valid = true;
     }
 
     int len = username.length() + password.length() + 1;
-    char sub_header [1024] = "SEND|1|";
-    char * header = join_str_int(sub_header, len);
+    char sub_header[1024] = "SEND|1|";
+    char *header = join_str_int(sub_header, len);
+    string cred = username + delim + password;
 
-    int num_bytes = send(usr.sock, header, 1024, 0);
-    if (num_bytes<0) perror("send error");
-
-    num_bytes = send (usr.sock, (username + string (1, delim) + password).c_str(), len, 0);
+    send_request(usr, header, cred, len);
 }

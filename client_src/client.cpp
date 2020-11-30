@@ -1,7 +1,6 @@
 /*
     client program
 */
-#include <stdio.h>
 #include "client.hpp"
 
 
