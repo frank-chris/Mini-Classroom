@@ -180,8 +180,8 @@ void student(User* usr, string classname){
                 string category = data_list[0];
                 string taskname = data_list[1];
                 string filename = data_list[2];
-                string filedir = "Classrooms/" + classname +"/Type1/" + category + "/" + taskname;
-                string filepath = "Classrooms/" + classname +"/Type1/" + category + "/" + taskname + "/" + filename;
+                string filedir = "Classrooms/" + classname +"/type_1/" + category + "/" + taskname;
+                string filepath = "Classrooms/" + classname +"/type_1/" + category + "/" + taskname + "/" + filename;
                 if(access(filepath.c_str(), F_OK) == 0){
                     send_data(cli_sock, false, student_state);
                     // File already exists
@@ -214,6 +214,9 @@ void student(User* usr, string classname){
             else if(num == 2){
                 string category = data_list[0];
                 string update_name = data_list[1];
+                string path = "Classrooms/" + classname + "/type_1/" + category + "/" + update_name + "/" + updates;
+                // updates is a txt file that contains all the updates such as As1 As2 in it
+                // We have to create these directories using the function create_entry()
             }
             else if(num == 3){
                 int type = stoi(data_list[0]);
