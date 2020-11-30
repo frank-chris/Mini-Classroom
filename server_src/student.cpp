@@ -145,7 +145,7 @@ void download_attachment(int cli_sock, int type, string category, string update_
         path = "Classrooms/" + classname + "/type_2/" + category + "/" + update_name + "/" + filename;
     }
 
-    if(access(path, F_OK) != 0){
+    if(access(path.c_str(), F_OK) != 0){
         send_file(cli_sock, true, path);
         send_data(cli_sock, true, "");
     }
@@ -182,7 +182,7 @@ void student(User* usr, string classname){
                 string filename = data_list[2];
                 string filedir = "Classrooms/" + classname +"/Type1/" + category + "/" + taskname;
                 string filepath = "Classrooms/" + classname +"/Type1/" + category + "/" + taskname + "/" + filename;
-                if(access(filepath, F_OK) == 0){
+                if(access(filepath.c_str(), F_OK) == 0){
                     send_data(cli_sock, false, student_state);
                     // File already exists
                 }
