@@ -9,11 +9,10 @@
 #include <vector>
 #include <unistd.h>
 #define BUFSIZE 1024
+#define delim '|'
 
 using namespace std;
 
-char delim = '|'; 
-string delim_s = "|";
 
 struct user
 {

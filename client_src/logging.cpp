@@ -1,4 +1,4 @@
-#include <client.hpp>
+#include "client.hpp"
 
 void login_user(user usr){
     string username, password; 
@@ -14,7 +14,7 @@ void login_user(user usr){
     int num_bytes = send(usr.sock, sub_header, 1024, 0);
     if (num_bytes<0) perror("send error");
 
-    num_bytes = send (usr.sock, (username + delim_s + password).c_str(), len, 0);
+    num_bytes = send (usr.sock, (username + string (1, delim) + password).c_str(), len, 0);
 }
 
 void register_user (user usr){
@@ -39,5 +39,5 @@ void register_user (user usr){
     int num_bytes = send(usr.sock, sub_header, 1024, 0);
     if (num_bytes<0) perror("send error");
 
-    num_bytes = send (usr.sock, (username + delim_s + password).c_str(), len, 0);
+    num_bytes = send (usr.sock, (username + string (1, delim) + password).c_str(), len, 0);
 }
