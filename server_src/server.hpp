@@ -18,6 +18,12 @@
     To enroll in an existing class, type: enroll \n\
     To join a class, type: join \n"
 
+#define STUDENT "You have entered the classroom, you can perform the following actions\
+    To see the Classwork section, type: classwork \n"
+
+#define INSTRUCTOR "You have entered the classroom, you can perform the following actions\
+    To see the Classwork section, type: classwork \n"    
+
 #include <bits/stdc++.h>
 
 typedef struct sockets
@@ -43,6 +49,8 @@ void handle_client(User *usr);
 int add_user(string username, string passwd);
 int check_credentials(string username, string passwd);
 void logged_in(User *usr);
+void student(User* usr);
+void instructor(User* usr);
 
 // Data transfer functions
 void recv_data(int cli_sock, string &header, string &data);

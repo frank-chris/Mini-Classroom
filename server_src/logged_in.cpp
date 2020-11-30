@@ -111,13 +111,13 @@ void logged_in(User *usr){
                 if(entry_exists(user_courses, classname)){
                     string instructor_path = "Classrooms/" + classname + "instructors.txt";
                     if(entry_exists(instructor_path, username)){
-                        // Goto instructor state
-                        // Display state message
+                        send_data(cli_sock, true, STUDENT);
+                        instructor(usr);
                     }
                     string student_path = "Classrooms/" + classname + "students.txt";
                     if(entry_exists(student_path, username)){
-                        // Goto student state
-                        // Display state message
+                        send_data(cli_sock, true, INSTRUCTOR);
+                        student(usr);
                     }
                 }
             }
