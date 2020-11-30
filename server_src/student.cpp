@@ -145,11 +145,14 @@ void download_attachment(int cli_sock, int type, string category, string update_
         path = "Classrooms/" + classname + "/type_2/" + category + "/" + update_name + "/" + filename;
     }
 
-    // TODO: 
+    
+    // TODO: send
 
 }
 
-
+void make_submission(int cli_sock, string category, string update_name, string classname, string filename){
+    
+}
 
 void student(User* usr, string classname){
     int cli_sock = usr -> cli_sock;
