@@ -48,6 +48,12 @@ int main(int argc, char const *argv[])
 	address.sin_port = htons(PORT);
 
 	
+    int enable = 1;
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0){
+        perror("setsockopt(SO_REUSEADDR) failed");
+		exit(EXIT_FAILURE);
+    }
+
 	if (bind(server_fd, (struct sockaddr *)&address, sizeof(address))<0)
 	{
 		perror("bind failed");
