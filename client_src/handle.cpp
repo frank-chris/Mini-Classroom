@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "client.hpp"
 
 int get_response(user usr){

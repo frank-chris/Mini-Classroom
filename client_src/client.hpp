@@ -30,4 +30,11 @@ int send_request(user, char *, string, int );
 void login_user (user);
 void register_user (user);
 
+//Entering
+void create_classroom(user);
+void get_all_courses(user);
+void enrol_classroom(user);
+void enter_classroom(user);
+void get_joined_courses(user);
+
 #endif /* CLIENT_HPP */
