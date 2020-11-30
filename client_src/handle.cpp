@@ -13,7 +13,7 @@ int get_response(user usr){
     int rec_bytes = 0;
     while (rec_bytes < len)
     {
-        num_bytes = read (usr.sock, buffer, min(BUFSIZE, rec_bytes - len));
+        num_bytes = read (usr.sock, buffer, min(BUFSIZE, len - rec_bytes));
         buffer[num_bytes] = '\0';
         if (num_bytes < 0)  perror ("send error");
         rec_bytes += num_bytes;
