@@ -15,7 +15,7 @@
 
 using namespace std;
 
-void* new_client_thread(void* arg){
+void *new_client_thread(void* arg){
     sockets* socks = (sockets*)arg;
     User* usr = (User*)malloc(sizeof(User));
 
@@ -74,7 +74,7 @@ int main(int argc, char const *argv[])
         socks->cli_sock = new_socket;
         socks->serv_sock = server_fd;
 
-        pthread_create(&new_thread, NULL, &new_client_thread, socks);
+        pthread_create(&new_thread, NULL, (new_client_thread), socks);
     }
 	
 	return 0; 

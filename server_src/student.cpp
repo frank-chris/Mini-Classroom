@@ -145,8 +145,11 @@ void download_attachment(int cli_sock, int type, string category, string update_
         path = "Classrooms/" + classname + "/type_2/" + category + "/" + update_name + "/" + filename;
     }
 
+    if(access(path, F_OK) != 0){
+        send_file(cli_sock, true, path);
+        send_data(cli_sock, true, "");
+    }
     
-    // TODO: send
 
 }
 
@@ -157,6 +160,7 @@ void make_submission(int cli_sock, string category, string update_name, string c
 void student(User* usr, string classname){
     int cli_sock = usr -> cli_sock;
     string username = usr -> name;
+    string student_state = STUDENT;
 
     cout<<"\nStudent state\n";
     
@@ -173,7 +177,24 @@ void student(User* usr, string classname){
         if(strings_list[0] == "SEND"){
             int num = stoi(strings_list[1]);
             if(num == 0){
-                
+                string category = data_list[0];
+                string taskname = data_list[1];
+                string filename = data_list[2];
+                string filedir = "Classrooms/" + classname +"/Type1/" + category + "/" + taskname;
+                string filepath = "Classrooms/" + classname +"/Type1/" + category + "/" + taskname + "/" + filename;
+                if(access(filepath, F_OK) == 0){
+                    send_data(cli_sock, false, student_state);
+                    // File already exists
+                }
+                else{
+                    send_data(cli_sock, true, "Uploading...");
+                    create_file(filedir, filename);
+                    header = "";
+                    data = "";
+                    recv_data(cli_sock, header, data);
+                    add_to_file(filepath, data);
+                    send_data(cli_sock, true, student_state);
+                }
             }
             else if(num == 1){
                 
@@ -191,7 +212,8 @@ void student(User* usr, string classname){
                 
             }
             else if(num == 2){
-                
+                string category = data_list[0];
+                string update_name = data_list[1];
             }
             else if(num == 3){
                 int type = stoi(data_list[0]);
@@ -210,7 +232,9 @@ void student(User* usr, string classname){
                 
             }
             else if(num == 7){
-                
+                string log_in = LOGGED_IN;
+                send_data(cli_sock, true, log_in);
+                logged_in(usr);
             }
         }
     }

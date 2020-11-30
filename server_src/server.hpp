@@ -51,7 +51,7 @@ void makedir(string path, string dirname);
 void create_file(string path, string filename);
 
 // Server functions
-void* new_client_thread(void* arg);
+void *new_client_thread(void* arg);
 void handle_client(User *usr);
 int add_user(string username, string passwd);
 int check_credentials(string username, string passwd);
@@ -67,6 +67,7 @@ void make_submission(int cli_sock, string category, string update_name, string c
 // Data transfer functions
 void recv_data(int cli_sock, string &header, string &data);
 void send_data(int cli_sock, bool ok, string msg);
+void send_file(int cli_sock, bool ok, string filepath);
 
 // Helper functions
 vector<string> split_string(string s);
