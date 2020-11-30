@@ -1,36 +1,39 @@
-#include <iostream>
 #include <stdio.h>
 #include "client.hpp"
-#define BUFSIZ 1024
-using namespace std;
 
+int get_response(user usr){
+    char buffer[BUFSIZE + 1];
+    int num_bytes = read(usr.sock, buffer, BUFSIZE);
+    if (num_bytes < 0)  perror ("send error");
+    buffer[num_bytes] = '\0';
 
-void login (user usr){
-    string username, password; 
-    cout<<"Username:\t";    cin>>username;
-    cout<<"Password:\t";    cin>>password;
+    vector <string> keys = split_string(buffer);
+    int len = atoi(keys[1].c_str());
 
-    int len = username.length() + password.length() + 1;
-    char sub_header [1024] = "SEND 0 ";
-    char * header = join_str_int(sub_header, len);
-
-    int num_bytes = send(usr.sock, sub_header, 1024, 0);
-    if (num_bytes<0) perror("send error");
-
-    num_bytes = send (usr.sock, (username + password).c_str(), len+1, 0);
+    int rec_bytes = 0;
+    while (rec_bytes < len)
+    {
+        num_bytes = read (usr.sock, buffer, min(BUFSIZE, rec_bytes - len));
+        buffer[num_bytes] = '\0';
+        if (num_bytes < 0)  perror ("send error");
+        rec_bytes += num_bytes;
+    }
 }
 
-void handle_command(user usr, char *buffer){
-    login(usr);
+
+void handle_command(user usr){
+
+    login_user(usr);
     ;
 }
 
 
 void handle_user(user usr){
-    char buffer [BUFSIZ + 1];
+    char buffer [BUFSIZE + 1]; memset (buffer, '\0', sizeof(buffer));
     int num_bytes = 0;
     while (1){
-        num_bytes = read(usr.sock, buffer, 1024);
-        handle_command(usr, buffer);
+        get_response(usr);
+        handle_command(usr);
+        get_response(usr);
     }
 }

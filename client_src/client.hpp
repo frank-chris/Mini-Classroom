@@ -3,24 +3,31 @@
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <iostream>
 #include <string.h>
 #include <string>
+#include <vector>
 #include <unistd.h>
+#define BUFSIZE 1024
 
-typedef struct user
+using namespace std;
+
+char delim = '|'; 
+string delim_s = "|";
+
+struct user
 {
     int sock;
-} user;
+};
 
+//handle
 void handle_user(user);
-void login (user);
-void handle_command (user);
+char * join_str_int(char *, int);
+vector <string> split_string(string);
+int get_response(user);
 
-char * join_str_int(char *req, int len){
-    string clen_ = to_string(len);
-    char * clen = new char [clen_.length() + 1];
-    strcpy (clen, clen_.c_str());
-    return clen;
-}
+//logging
+void login_user (user);
+void register_user (user);
 
 #endif /* CLIENT_HPP */

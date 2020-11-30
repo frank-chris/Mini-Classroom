@@ -1,11 +1,9 @@
 /*
     client program
 */
-#include <iostream>
 #include <stdio.h>
 #include "client.hpp"
 
-using namespace std;
 
 int PORT = 8080;
 
