@@ -85,11 +85,11 @@ void handle_command(user usr)
         else if (command == "classwork") get_classwork(usr);
         else if (command == "people") get_people(usr);
         else if (command == "showmy") get_joined_courses(usr);
-        else if (command == "showmy") get_joined_courses(usr);
-        else if (command == "showmy") get_joined_courses(usr);
-        else if (command == "showmy") get_joined_courses(usr);
-        else if (command == "showmy") get_joined_courses(usr);
-        else if (command == "showmy") get_joinedourses(usr);
+        //else if (command == "showmy") get_joined_courses(usr);
+        //else if (command == "showmy") get_joined_courses(usr);
+        //else if (command == "showmy") get_joined_courses(usr);
+        //else if (command == "showmy") get_joined_courses(usr);
+        //else if (command == "showmy") get_joined_courses(usr);
         //create_post(usr);
         //view_all_submissions(usr);
         //view_particular_submission(usr);
