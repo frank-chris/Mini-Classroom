@@ -15,21 +15,22 @@
 
 using namespace std;
 
-void* handle_client(void* arg){
+void* new_client_thread(void* arg){
     sockets* socks = (sockets*)arg;
+    User* usr = (User*)malloc(sizeof(User));
 
-    int valread;
-    const char *hello = "Hello from server";
-    char buffer[1024] = {0};
+	usr->cli_sock = socks->cli_sock;
+	usr->active = true;
 
-    valread = read(socks->cli_sock, buffer, 1024); 
-	printf("%s\n", buffer); 
-	send(socks->cli_sock, hello, strlen(hello), 0); 
-	printf("Hello message sent\n"); 
+	cout<<"\nThread spawned\n";
+	
+    handle_client(usr);
 }
 
 int main(int argc, char const *argv[])
 {
+    initFS();
+
 	int server_fd, new_socket;
 	struct sockaddr_in address;
 	int opt = 1;
@@ -58,6 +59,8 @@ int main(int argc, char const *argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	cout<<"\nListening on "<<PORT<<"\n";
+
     while (true)
     {
         if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
@@ -65,12 +68,13 @@ int main(int argc, char const *argv[])
             perror("accept");
             exit(EXIT_FAILURE);
         }
+		cout<<"\nClient: "<<new_socket<<" connected\n";
         pthread_t new_thread;
         sockets* socks = (sockets *)(malloc(sizeof(sockets)));
         socks->cli_sock = new_socket;
         socks->serv_sock = server_fd;
 
-        pthread_create(&new_thread, NULL, &handle_client, socks);
+        pthread_create(&new_thread, NULL, &new_client_thread, socks);
     }
 	
 	return 0; 
