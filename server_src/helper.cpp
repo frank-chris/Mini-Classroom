@@ -16,9 +16,11 @@ using namespace std;
 
 vector<string> split_string(string s){
     stringstream ss(s);
-    istream_iterator<string> begin(ss);
-    istream_iterator<string> end;
-    vector<string> v(begin, end);
+    string parse;
+    vector<string> v;
+    while(getline(ss, parse, SPLITTER)){
+        v.push_back(parse);
+    }
     return v;
 }
 
@@ -61,19 +63,10 @@ bool check_pair(string username, string passwd){
     return false;
 }
 
-void add_to_class(string classname, string username, bool instructor){
-    if(instructor){
-        string path = "Classrooms/" + classname;
-        ofstream outfile;
-        string file = path + "/" + "instructors.txt";
-    }
-    else{
-        string path = "Classrooms/" + classname;
-        ofstream outfile;
-        string file = path + "/" + "students.txt";
-        path = "Users/" + username;
-        makedir()
-    }
+void add_to_file(string filename, string msg){
+    ofstream outfile;
+    outfile.open(filename, ios_base::app);
+    outfile<<msg<<endl;
 }
 
 string file_contents(string filename){

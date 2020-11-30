@@ -1,6 +1,7 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+#define SPLITTER '|'
 #define BUF_SIZE 1024
 
 // Prompt messages sent for each state. Note that these defines are of const char[] type, so better
@@ -50,6 +51,7 @@ void send_data(int cli_sock, bool ok, string msg);
 vector<string> split_string(string s);
 bool entry_exists(string file, string query);
 void create_entry(string directory, string file, string name);
+void add_to_file(string filename, string msg);
 void add_pair(string username, string passwd);
 bool check_pair(string username, string passwd);
 string file_contents(string filename); // Only those files that have a single word in every line

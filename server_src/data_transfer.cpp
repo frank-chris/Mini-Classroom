@@ -34,7 +34,7 @@ void send_data(int cli_sock, bool ok, string msg){
         code = "NOK";
     }
     string len = atoi(msg.length());
-    string resp = code + " " + len;
+    string resp = code + SPLITTER + len;
     if(send(cli_sock, resp, BUF_SIZE, 0) < 0){
         perror("send() failed");
     }

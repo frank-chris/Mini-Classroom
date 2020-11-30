@@ -25,8 +25,10 @@ int create_class(string classname){
     }
     string username = usr -> name;
     create_entry("Classrooms", "Classrooms/classrooms.txt", classname);
-    add_to_class(classname, username, true); // 0 for instructor, 1 for student
     string classpath = "Classrooms/" + classname;
+    create_file(classpath + "/instructors.txt");
+    create_file(classpath + "/students.txt");
+    add_to_file(classpath + "/instructors.txt", username);
     makedir(classpath, "Type 1");
     makedir(classpath, "Type 2");
     string personal_path = "Users/" + username;
@@ -45,7 +47,7 @@ int enroll(string classname){
      */
     if(entry_exists("Classrooms/classrooms.txt", classname)){
         string username = usr -> name;
-        add_to_class(classname, username, false);
+        add_to_file(classpath + "/students.txt", username);
         string personal_path = "Users/" + username;
         string courses_file = personal_path + "/courses.txt";
         create_entry(personal_path, courses_file, classname);
