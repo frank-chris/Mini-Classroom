@@ -90,7 +90,7 @@ void logged_in(User *usr){
         else if(strings_list[0] == "ASK"){
             int num = atoi(strings_list[1]);
             if(num == 0){
-                // Get the full list of courses
+                // Read classrooms.txt, append login to it
             }
             else if(num == 1){
                 // Enter a classroom

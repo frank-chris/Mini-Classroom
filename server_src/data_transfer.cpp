@@ -45,3 +45,7 @@ void send_data(int cli_sock, bool ok, string msg){
         // fail_msg();
     }
 }
+
+void send_file(int cli_sock, string filepath){
+    fopen(filepath);
+}
