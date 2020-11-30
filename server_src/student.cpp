@@ -8,13 +8,169 @@
 #include "server.hpp"
 #include <iostream>
 #include <fstream>
+#include <dirent.h>
 
 using namespace std;
 
-void show_classwork(){
+void show_classwork(int cli_sock, string classname){
+
+    string type_1 = "Classrooms/" + classname + "type_1/";
+    string type_2 = "Classrooms/" + classname + "type_2/";
     
+    string res = "Classwork-\n";
+    res += "--------------\n";
+
+    // open type_1 directory
+    DIR * dp = opendir(type_1.c_str());
+    
+    // check if directory was opened
+    if(dp == NULL){
+        perror("opendir error");
+    }
+
+    // loop through the entries of the type_1 directory
+    struct dirent *d;
+    while ((d = readdir(dp)) != NULL) {
+        // ignore if entry is . or ..
+        if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, "..")){
+            continue;
+        }
+        res += string(d->d_name);
+        res += "\n--------------\n";
+
+        DIR * dp_2 = opendir((type_1 + string(d->d_name)).c_str());
+        // check if directory was opened
+        if(dp_2 == NULL){
+            perror("opendir error");
+        }
+
+        struct dirent *d_2;
+        while ((d_2 = readdir(dp_2)) != NULL)
+        {
+            // ignore if entry is . or ..
+            if (!strcmp(d_2->d_name, ".") || !strcmp(d_2->d_name, "..")){
+                continue;
+            }
+            res += string(d_2->d_name);
+            res += "\n";
+        }
+        closedir(dp_2);
+    }
+    // close directory
+    closedir(dp);
+
+
+    res += "--------------\n";
+
+    // open type_2 directory
+    DIR * dp = opendir(type_2.c_str());
+    
+    // check if directory was opened
+    if(dp == NULL){
+        perror("opendir error");
+    }
+
+    // loop through the entries of the type_2 directory
+    struct dirent *d;
+    while ((d = readdir(dp)) != NULL) {
+        // ignore if entry is . or ..
+        if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, "..")){
+            continue;
+        }
+        res += string(d->d_name);
+        res += "\n--------------\n";
+
+        DIR * dp_2 = opendir((type_2 + string(d->d_name)).c_str());
+        // check if directory was opened
+        if(dp_2 == NULL){
+            perror("opendir error");
+        }
+
+        struct dirent *d_2;
+        while ((d_2 = readdir(dp_2)) != NULL)
+        {
+            // ignore if entry is . or ..
+            if (!strcmp(d_2->d_name, ".") || !strcmp(d_2->d_name, "..")){
+                continue;
+            }
+            res += string(d_2->d_name);
+            res += "\n";
+        }
+        closedir(dp_2);
+    }
+    // close directory
+    closedir(dp);
+
+    res += "--------------\n";
+    res += STUDENT;
+    send_data(cli_sock, true, res);
+}
+
+void show_people_list(int cli_sock, string classname){
+    string student_path = "Classrooms/" + classname + "students.txt";
+    string instructor_path = "Classrooms/" + classname + "instructors.txt";
+
+    string res = "People-\n";
+    res += "--------------\n";
+    res += "Instructors-\n\n";
+    res += file_contents(instructor_path);
+    res += "--------------\n";
+    res += "Students-\n\n";
+    res += file_contents(student_path);
+    res += "--------------\n";
+    res += STUDENT;
+    send_data(cli_sock, true, res);
 }
 
 void student(User* usr, string classname){
-    
+    int cli_sock = usr -> cli_sock;
+    string username = usr -> name;
+
+    while(true){
+        if((usr -> active) == false){
+            break;
+        }
+
+        string header;
+        string data;
+        recv_data(cli_sock, header, data);
+        vector<string> strings_list = split_string(header);
+
+        if(strings_list[0] == "SEND"){
+            int num = atoi(strings_list[1].c_str());
+            if(num == 0){
+                
+            }
+            else if(num == 1){
+                
+            }
+        }
+        else if(strings_list[0] == "ASK"){
+            int num = atoi(strings_list[1].c_str());
+            if(num == 0){
+                
+            }
+            else if(num == 1){
+                
+            }
+            else if(num == 2){
+                
+            }
+            else if(num == 3){
+                
+            }
+            else if(num == 4){
+                
+            }
+            else if(num == 5){
+                
+            }
+            else if(num == 6){
+                
+            }
+            else if(num == 7){
+                
+            }
+        }
+    }
 }

@@ -19,10 +19,12 @@
     To join a class, type: join \n"
 
 #define STUDENT "You have entered the classroom, you can perform the following actions\
-    To see the Classwork section, type: classwork \n"
+    To see the Classwork section, type: classwork \n\
+    To see the People section, type: people \n"
 
 #define INSTRUCTOR "You have entered the classroom, you can perform the following actions\
-    To see the Classwork section, type: classwork \n"    
+    To see the Classwork section, type: classwork \n\
+    To see the People section, type: people \n"   
 
 #include <bits/stdc++.h>
 
@@ -51,6 +53,9 @@ int check_credentials(string username, string passwd);
 void logged_in(User *usr);
 void student(User* usr, string classname);
 void instructor(User* usr, string classname);
+void show_people_list(int cli_sock, string classname);
+void show_classwork(int cli_sock, string classname);
+
 
 // Data transfer functions
 void recv_data(int cli_sock, string &header, string &data);
