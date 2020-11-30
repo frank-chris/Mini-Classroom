@@ -11,7 +11,7 @@ int get_response(user usr)
     if (num_bytes < 0)
         perror("send error");
     buffer[num_bytes] = '\0';
-
+    cout<<"\nReceived some data\n";
     vector<string> keys = split_string(buffer);
     int len = atoi(keys[1].c_str());
 
@@ -62,8 +62,8 @@ int send_file(user usr, string path, int len)
 void handle_command(user usr)
 {
 
-    login_user(usr);
-    ;
+    register_user(usr);
+
 }
 
 void handle_user(user usr)
@@ -74,7 +74,10 @@ void handle_user(user usr)
     while (1)
     {
         get_response(usr);
+        cout<<"\nGot response\n";
         handle_command(usr);
+        cout<<"\nHandled client\n";
         get_response(usr);
+        cout<<"\nGot response2\n";
     }
 }

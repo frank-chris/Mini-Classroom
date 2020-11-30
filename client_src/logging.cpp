@@ -37,7 +37,7 @@ void register_user(user usr)
     bool valid = false;
     char ch = '\0';
 
-    while (valid)
+    while (!valid)
     {
         cout << "Password:    ";
         password = "";
