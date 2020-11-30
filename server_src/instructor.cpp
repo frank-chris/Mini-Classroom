@@ -11,6 +11,6 @@
 
 using namespace std;
 
-void instructor(User* usr){
+void instructor(User* usr, string classname){
     
 }

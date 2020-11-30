@@ -112,12 +112,12 @@ void logged_in(User *usr){
                     string instructor_path = "Classrooms/" + classname + "instructors.txt";
                     if(entry_exists(instructor_path, username)){
                         send_data(cli_sock, true, STUDENT);
-                        instructor(usr);
+                        instructor(usr, classname);
                     }
                     string student_path = "Classrooms/" + classname + "students.txt";
                     if(entry_exists(student_path, username)){
                         send_data(cli_sock, true, INSTRUCTOR);
-                        student(usr);
+                        student(usr, classname);
                     }
                 }
             }

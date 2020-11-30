@@ -49,8 +49,8 @@ void handle_client(User *usr);
 int add_user(string username, string passwd);
 int check_credentials(string username, string passwd);
 void logged_in(User *usr);
-void student(User* usr);
-void instructor(User* usr);
+void student(User* usr, string classname);
+void instructor(User* usr, string classname);
 
 // Data transfer functions
 void recv_data(int cli_sock, string &header, string &data);
