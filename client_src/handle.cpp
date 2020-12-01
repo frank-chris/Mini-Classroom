@@ -114,7 +114,7 @@ int send_request(user usr, char *header, string data, int len)
 int send_file(user usr, string path, int len)
 {
     int read_fd = open(path.c_str(), O_RDONLY);
-    int num_bytes = sendfile(usr.sock, read_fd, NULL, BUFSIZE);
+    int num_bytes = sendfile(usr.sock, read_fd, NULL, len);
     cout << "Total Bytes Sent: " << num_bytes << endl;
     cout << "Total Bytes Expected to be sent: " << len << endl;
 
@@ -178,7 +178,7 @@ void handle_command(user usr)
         else if (command == "viewsub")
             view_submission(usr);
         else if (command == "makesub")
-            exit_class(usr);
+            make_submission(usr);
         else if (command == "viewpost")
             view_post(usr);
 

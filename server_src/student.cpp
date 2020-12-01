@@ -20,88 +20,31 @@ void show_classwork(int cli_sock, string classname){
     string res = "Classwork-\n";
     res += "--------------\n";
 
-    // open type_1 directory
-    DIR * dp = opendir(type_1.c_str());
-    
-    // check if directory was opened
-    if(dp == NULL){
-        perror("opendir error");
+    res += "Type 1\n-------\n";
+
+    vector<string> categories = list_of_entries(type_1 + "categories.txt");
+
+    for(string cat : categories){
+        res += cat + "-\n";
+        vector<string> updates = list_of_entries(type_1 + cat +"/updates.txt");
+        for(string upd : updates){
+            res += upd + "\n";
+        }
+        res += "---------------\n\n";
     }
 
-    // loop through the entries of the type_1 directory
-    struct dirent *d;
-    while ((d = readdir(dp)) != NULL) {
-        // ignore if entry is . or ..
-        if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, "..")){
-            continue;
-        }
-        res += string(d->d_name);
-        res += "\n--------------\n";
+    res += "Type 2\n-------\n";
 
-        DIR * dp_2 = opendir((type_1 + string(d->d_name)).c_str());
-        // check if directory was opened
-        if(dp_2 == NULL){
-            perror("opendir error");
-        }
+    categories = list_of_entries(type_2 + "categories.txt");
 
-        struct dirent *d_2;
-        while ((d_2 = readdir(dp_2)) != NULL)
-        {
-            // ignore if entry is . or ..
-            if (!strcmp(d_2->d_name, ".") || !strcmp(d_2->d_name, "..")){
-                continue;
-            }
-            res += string(d_2->d_name);
-            res += "\n";
+    for(string cat : categories){
+        res += cat + "-\n";
+        vector<string> updates = list_of_entries(type_2 + cat +"/updates.txt");
+        for(string upd : updates){
+            res += upd + "\n";
         }
-        closedir(dp_2);
+        res += "---------------\n\n";
     }
-    // close directory
-    closedir(dp);
-
-
-    res += "--------------\n";
-
-    // open type_2 directory
-    dp = opendir(type_2.c_str());
-    
-    // check if directory was opened
-    if(dp == NULL){
-        perror("opendir error");
-    }
-
-    // loop through the entries of the type_2 directory
-
-    while ((d = readdir(dp)) != NULL) {
-        // ignore if entry is . or ..
-        if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, "..")){
-            continue;
-        }
-        res += string(d->d_name);
-        res += "\n--------------\n";
-
-        DIR * dp_2 = opendir((type_2 + string(d->d_name)).c_str());
-        // check if directory was opened
-        if(dp_2 == NULL){
-            perror("opendir error");
-        }
-
-        struct dirent *d_2;
-        while ((d_2 = readdir(dp_2)) != NULL)
-        {
-            // ignore if entry is . or ..
-            if (!strcmp(d_2->d_name, ".") || !strcmp(d_2->d_name, "..")){
-                continue;
-            }
-            res += string(d_2->d_name);
-            res += "\n";
-        }
-        closedir(dp_2);
-    }
-    // close directory
-    closedir(dp);
-
-    res += "--------------\n";
     res += STUDENT;
     send_data(cli_sock, true, res);
 }
@@ -185,23 +128,17 @@ void student(User* usr, string classname){
             int num = stoi(strings_list[1]);
             if(num == 0){
                 string category = data_list[0];
-                string taskname = data_list[1];
+                string updatename = data_list[1];
                 string filename = data_list[2];
-                string filedir = "Classrooms/" + classname +"/type_1/" + category + "/" + taskname;
-                string filepath = "Classrooms/" + classname +"/type_1/" + category + "/" + taskname + "/" + filename;
-                if(access(filepath.c_str(), F_OK) == 0){
-                    send_data(cli_sock, false, student_state);
-                    // File already exists
-                }
-                else{
-                    send_data(cli_sock, true, "Uploading...");
-                    create_file(filedir, filename);
-                    header = "";
-                    data = "";
-                    recv_data(cli_sock, header, data);
-                    add_to_file(filepath, data);
-                    send_data(cli_sock, true, student_state);
-                }
+                string subm_dir = "Users/" + username + "/" + classname + "/" + category + "/" + updatename;
+
+                send_data(cli_sock, true, "Uploading...");
+                create_file(subm_dir, filename);
+                header = "";
+                data = "";
+                recv_data(cli_sock, header, data);
+                add_to_file(subm_dir + "/" + filename, data);
+                send_data(cli_sock, true, student_state);
             }
         }
         else if(strings_list[0] == "ASK"){

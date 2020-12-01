@@ -82,7 +82,7 @@ void upload_file(user usr)
     char sub_header[1024] = "SEND|0|";
     char *header = join_str_int(sub_header, len);
 
-    send_request(usr, header, "", len);
+    send_request(usr, header, "", 0);
     send_file(usr, path, len);
 }
 

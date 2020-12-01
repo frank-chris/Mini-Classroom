@@ -16,7 +16,7 @@ using namespace std;
 
 void recv_data(int cli_sock, string &header, string &data){
     int data_recv;
-    char temp_header[BUF_SIZE];
+    char temp_header[BUF_SIZE + 1];
     data_recv = recv(cli_sock, temp_header, BUF_SIZE, 0);
     if(data_recv < 0){
         perror("recv() failed");
@@ -26,7 +26,7 @@ void recv_data(int cli_sock, string &header, string &data){
     header = temp_header;
     data = "";
 
-    char temp_buffer[BUF_SIZE];
+    char temp_buffer[BUF_SIZE + 1];
     
     vector<string> strings_list = split_string(header);
     string buffer;

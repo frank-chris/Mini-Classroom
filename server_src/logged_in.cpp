@@ -50,6 +50,18 @@ int enroll(string classname, string username){
         string personal_path = "Users/" + username;
         string courses_file = personal_path + "/courses.txt";
         create_entry(personal_path, courses_file, classname);
+        personal_path += "/" + classname;
+        create_file(personal_path, "categories.txt");
+        classpath += "/type_1";
+        vector<string> categories = list_of_entries(classpath + "/categories.txt");
+        for(string cat : categories){
+            create_entry(personal_path, personal_path + "/categories.txt", cat);
+            vector<string> updates = list_of_entries(classpath + "/" + cat +"/updates.txt");
+            create_file(personal_path + "/" + cat, "updates.txt");
+            for(string upd : updates){
+                create_entry(personal_path + "/" + cat, personal_path + "/" + cat + "/updates.txt", upd);
+            }
+        }
         return 1;
     }
     return 0;
