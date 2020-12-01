@@ -153,10 +153,6 @@ void download_attachment(int cli_sock, int type, string category, string update_
 
 }
 
-void make_submission(int cli_sock, string category, string update_name, string classname, string filename){
-    
-}
-
 void student(User* usr, string classname){
     int cli_sock = usr -> cli_sock;
     string username = usr -> name;
@@ -214,7 +210,7 @@ void student(User* usr, string classname){
             else if(num == 2){
                 string category = data_list[0];
                 string update_name = data_list[1];
-                string path = "Classrooms/" + classname + "/type_1/" + category + "/" + update_name + "/" + updates;
+                string path = "Classrooms/" + classname + "/type_1/" + category + "/" + update_name + "/" + "updates.txt";
                 // updates is a txt file that contains all the updates such as As1 As2 in it
                 // We have to create these directories using the function create_entry()
             }
