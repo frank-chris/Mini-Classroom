@@ -59,3 +59,12 @@ void get_joined_courses(user usr)
 
     send_request(usr, header, "", len);
 }
+
+void logout_user (user usr)
+{
+    int len = 0;
+    char sub_header[1024] = "ASK|3|";
+    char *header = join_str_int(sub_header, len);
+
+    send_request(usr, header, "", len);
+}

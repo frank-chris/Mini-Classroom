@@ -153,6 +153,8 @@ void handle_command(user usr)
             enter_classroom(usr);
         else if (command == "showmy")
             get_joined_courses(usr);
+        else if (command == "logout")
+            logout_user(usr);
 
         //Instructor
         else if (command == "classwork")

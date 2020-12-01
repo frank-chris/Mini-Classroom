@@ -3,13 +3,26 @@
 void create_post(user usr)
 {
     //Modify this in accordance with types
-    string type, category, deadline, assignment_name, desc;
+    string category, assignment_name, deadline, desc;
     vector<string> file_names;
-    int num_files;
-    cout << "Type:    " << flush;
+    int type, num_files;
+
+    cout << "Type [Press 1/2]:    " << flush;
     cin >> type;
     cout << "Category:    " << flush;
     cin >> category;
+    cout << "Assignment Name:    " << flush;
+    cin >> assignment_name;
+
+    if (type == 1)
+    {
+        cout << "Deadline:    " << flush;
+        cin >> deadline;
+        cin.ignore();
+        cout << "Description:    " << flush;
+        getline(cin, desc);
+    }
+
     cout << "Number of Files:    " << flush;
     cin >> num_files;
 
@@ -25,20 +38,21 @@ void create_post(user usr)
         file_names.push_back(temp);
     }
 
-    cout << "Deadline:    " << flush;
-    cin >> deadline;
-    cout << "Assignment Name:    " << flush;
-    cin >> assignment_name;
-    cin.ignore();
-    cout << "Description:    " << flush;
-    getline(cin, desc);
-
-    string to_send = type + delim + category + delim + to_string(num_files) + delim;
-    for (int i = 0; i < num_files; i++)
-    {
-        to_send = to_send + file_names[i] + delim;
+    string to_send;
+    if (type==1){
+        to_send = to_string(type) + delim + category + delim + assignment_name + delim + deadline + delim + desc + delim + to_string(num_files);
+        for (int i = 0; i < num_files; i++)
+        {
+            to_send = to_send + delim + file_names[i];
+        }
     }
-    to_send = to_send + deadline + delim + assignment_name + delim + desc;
+    else{
+        to_send = to_string (type) + delim + category + delim + assignment_name + delim + desc + delim + to_string(num_files);
+        for (int i = 0; i < num_files; i++)
+        {
+            to_send = to_send + delim + file_names[i];
+        }
+    }
 
     int len = to_send.length();
 

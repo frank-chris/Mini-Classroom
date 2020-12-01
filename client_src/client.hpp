@@ -41,6 +41,7 @@ void get_all_courses(user);
 void enrol_classroom(user);
 void enter_classroom(user);
 void get_joined_courses(user);
+void logout_user(user);
 
 //instructor
 void create_post(user);
