@@ -12,24 +12,37 @@ using namespace std;
 // Prompt messages sent for each state. Note that these defines are of const char[] type, so better
 // convert them to string first
 
-#define HANDLE_CLI "Welcome to Mini-Classroom\n\
+#define HANDLE_CLI "\n\nWelcome to Mini-Classroom-\n\
     To log in to an existing account, type: login \n\
     To create a new account account, type: register\n"
 
-#define LOGGED_IN "You are logged in, you can perform the following actions\
+#define LOGGED_IN "\n\nYou are logged in, you can perform the following actions-\n\
     To view the list of courses, type: showall\n\
     To view the list of enrolled courses, type: showmy\n\
     To create class a new class, type: create \n\
     To enroll in an existing class, type: enroll \n\
     To join a class, type: join \n"
 
-#define STUDENT "You have entered the classroom, you can perform the following actions\
+#define STUDENT "\n\nYou have entered the classroom, you can perform the following actions-\n\
     To see the Classwork section, type: classwork \n\
-    To see the People section, type: people \n"
+    To see the People section, type: people \n\
+    To view your submission for a work, type viewsub \n\
+    To make a submission for a work, type makesub \n\
+    To view a classroom post, type viewpost \n\
+    To download a file, type downloadsub \n\
+    To logout of the class,  type exitclass \n"
 
-#define INSTRUCTOR "You have entered the classroom, you can perform the following actions\
+
+#define INSTRUCTOR "\n\nYou have entered the classroom, you can perform the following actions-\n\
     To see the Classwork section, type: classwork \n\
-    To see the People section, type: people \n"   
+    To see the People section, type: people \n\
+    To add a new post, type createpost \n\
+    To view all submissions of a work, type viewallsubs \n\
+    To view a particular student’s submission, type viewparticularsubs \n\
+    To view a classroom post, type viewpost \n\
+    To download a student’s submission, type downloadsub \n\
+    To logout of the class, type exitclass \n"
+
 
 #include <bits/stdc++.h>
 

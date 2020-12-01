@@ -112,10 +112,10 @@ void show_people_list(int cli_sock, string classname){
 
     string res = "People-\n";
     res += "--------------\n";
-    res += "Instructors-\n\n";
+    res += "Instructors-\n";
     res += file_contents(instructor_path);
     res += "--------------\n";
-    res += "Students-\n\n";
+    res += "Students-\n";
     res += file_contents(student_path);
     res += "--------------\n";
     res += STUDENT;

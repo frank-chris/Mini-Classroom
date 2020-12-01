@@ -74,7 +74,7 @@ string file_contents(string filename){
     string res = "";
     string buf;
     while(infile >> buf){
-        res += buf;
+        res += buf + '\n';
     }
     return res;
 }

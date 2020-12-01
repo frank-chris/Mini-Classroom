@@ -28,8 +28,8 @@ int create_class(string classname, string username){
     create_file(classpath, "/instructors.txt");
     create_file(classpath, "/students.txt");
     add_to_file(classpath + "/instructors.txt", username);
-    makedir(classpath, "Type 1");
-    makedir(classpath, "Type 2");
+    makedir(classpath, "type_1");
+    makedir(classpath, "type_2");
     string personal_path = "Users/" + username;
     string courses_file = personal_path + "/courses.txt";
     create_entry(personal_path, courses_file, classname);
@@ -102,9 +102,9 @@ void logged_in(User *usr){
             if(num == 0){
                 cout<<"\nDisplaying all courses\n";
                 // Read classrooms.txt, append login to it
-                string res = "List of all courses available-\n";
+                string res = "\nList of all courses available-\n";
                 res += file_contents("Classrooms/classrooms.txt");
-                res += "--------------\n";
+                res += "\n--------------\n";
                 res += LOGGED_IN;
                 send_data(cli_sock, true, res);
             }
@@ -114,16 +114,20 @@ void logged_in(User *usr){
                 string classname = data;
                 string user_courses = "Users/" + username + "/courses.txt";
                 if(entry_exists(user_courses, classname)){
-                    string instructor_path = "Classrooms/" + classname + "instructors.txt";
+                    string instructor_path = "Classrooms/" + classname + "/instructors.txt";
                     if(entry_exists(instructor_path, username)){
-                        send_data(cli_sock, true, STUDENT);
+                        send_data(cli_sock, true, INSTRUCTOR);
                         instructor(usr, classname);
                     }
-                    string student_path = "Classrooms/" + classname + "students.txt";
+                    string student_path = "Classrooms/" + classname + "/students.txt";
                     if(entry_exists(student_path, username)){
-                        send_data(cli_sock, true, INSTRUCTOR);
+                        send_data(cli_sock, true, STUDENT);
                         student(usr, classname);
                     }
+                }
+                else{
+                    send_data(cli_sock, false, LOGGED_IN);
+                    continue;
                 }
             }
             else if(num == 2){
@@ -131,7 +135,7 @@ void logged_in(User *usr){
                 string res = "List of joined courses-\n";
                 string filename = "Users/" + username + "/courses.txt";
                 res += file_contents(filename);
-                res += "--------------\n";
+                res += "\n--------------\n";
                 res += LOGGED_IN;
                 send_data(cli_sock, true, res);
                 

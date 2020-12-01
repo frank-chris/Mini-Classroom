@@ -10,6 +10,7 @@
 #include <string.h>
 #include <pthread.h>
 #include "server.hpp"
+#include <sys/stat.h>
 
 #define PORT 8080
 
@@ -29,7 +30,10 @@ void *new_client_thread(void* arg){
 
 int main(int argc, char const *argv[])
 {
-    initFS();
+    struct stat buf;
+    if(stat("Users", &buf) != 0){
+        initFS();
+    }
 
 	int server_fd, new_socket;
 	struct sockaddr_in address;

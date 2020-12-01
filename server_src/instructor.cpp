@@ -75,9 +75,13 @@ void instructor(User* usr, string classname){
                         create_entry(curpath, curpath + "/updates.txt", update_name);
                     }
                     curpath += "/" + update_name;
-                    int num_files = stoi(data_list[3]);
+                    string text = data_list[3];
+                    string update_info = text; 
+                    create_file(curpath, "display_text.txt");
+                    add_to_file(curpath + "/display_text.txt", update_info);
+                    int num_files = stoi(data_list[4]);
                     for(int i = 0; i < num_files; i++){
-                        string filename = data_list[4 + i];
+                        string filename = data_list[5 + i];
                         header = "";
                         data = "";
                         recv_data(cli_sock, header, data);
