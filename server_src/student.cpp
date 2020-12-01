@@ -130,10 +130,17 @@ void view_classroom_update(int cli_sock, int type, string category, string updat
     else if(type == 2){
         path = "Classrooms/" + classname + "/type_2/" + category + "/" + update_name;
     }
-    string res = file_contents(path + "/display_text.txt");
-    res += "\n--------------\n";
-    res += STUDENT;
-    send_data(cli_sock, true, res);
+    if(access((path + "/display_text.txt").c_str(), F_OK) != 0){
+        cout<<"Path does not exist"<<endl;
+        string res = STUDENT;
+        send_data(cli_sock, false, res);
+    }
+    else{
+        string res = file_contents(path + "/display_text.txt");
+        res += "\n--------------\n";
+        res += STUDENT;
+        send_data(cli_sock, true, res);
+    }
 }
 
 void download_attachment(int cli_sock, int type, string category, string update_name, string classname, string filename){
@@ -145,16 +152,16 @@ void download_attachment(int cli_sock, int type, string category, string update_
         path = "Classrooms/" + classname + "/type_2/" + category + "/" + update_name + "/" + filename;
     }
 
-    if(access(path.c_str(), F_OK) != 0){
+    if(access(path.c_str(), F_OK) == 0){
         send_file(cli_sock, true, path);
-        send_data(cli_sock, true, "");
+        send_data(cli_sock, true, INSTRUCTOR);
+    }
+    else{
+        send_file(cli_sock, false, "");
+        send_data(cli_sock, false, INSTRUCTOR);
     }
     
 
-}
-
-void make_submission(int cli_sock, string category, string update_name, string classname, string filename){
-    
 }
 
 void student(User* usr, string classname){
@@ -196,9 +203,6 @@ void student(User* usr, string classname){
                     send_data(cli_sock, true, student_state);
                 }
             }
-            else if(num == 1){
-                
-            }
         }
         else if(strings_list[0] == "ASK"){
             int num = stoi(strings_list[1]);
@@ -208,15 +212,13 @@ void student(User* usr, string classname){
                 string update_name = data_list[2];
                 view_classroom_update(cli_sock, type, category, update_name, classname);
             }
-            else if(num == 1){
-                
-            }
             else if(num == 2){
                 string category = data_list[0];
                 string update_name = data_list[1];
-                string path = "Classrooms/" + classname + "/type_1/" + category + "/" + update_name + "/" + updates;
-                // updates is a txt file that contains all the updates such as As1 As2 in it
-                // We have to create these directories using the function create_entry()
+                string path = "Classrooms/" + classname + "/type_1/" + category + "/" + update_name + "/" + "updates.txt";
+                string res = "Your submissions for " + update_name + " -\n";
+                res += view_submission(username, classname, category, update_name);
+                send_data(cli_sock, true, res);
             }
             else if(num == 3){
                 int type = stoi(data_list[0]);

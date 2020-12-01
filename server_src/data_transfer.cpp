@@ -64,6 +64,12 @@ void send_file(int cli_sock, bool ok, string filepath){
     }
     else{
         code = "NOK";
+        string len = 0;
+        string resp = code + SPLITTER + len;
+        if(send(cli_sock, resp.c_str(), BUF_SIZE, 0) < 0){
+            perror("send() failed");
+        }
+        return;
     }
     FILE * fptr = fopen(filepath.c_str(), "r");
     if(fptr == NULL){
