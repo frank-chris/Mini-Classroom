@@ -77,5 +77,10 @@ void add_to_file(string filename, string msg);
 void add_pair(string username, string passwd);
 bool check_pair(string username, string passwd);
 string file_contents(string filename); // Only those files that have a single word in every line
+vector<string> list_of_entries(string filename);
+string view_submission(string student, string course, string category, string update);
+void show_classwork(int cli_sock, string classname);
+void show_people_list(int cli_sock, string classname);
+void view_classroom_update(int cli_sock, int type, string category, string update_name, string classname);
 
 #endif /* SERVER_HPP */

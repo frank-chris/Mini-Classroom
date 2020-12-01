@@ -79,3 +79,29 @@ string file_contents(string filename){
     return res;
 }
 
+vector<string> list_of_entries(string filename){
+    ifstream infile(filename);
+    vector<string> res;
+    string buf;
+    while(infile >> buf){
+        res.push_back(buf);
+    }
+    return res;
+}
+
+string view_submission(string student, string course, string category, string update){
+    string res = "";
+    string path = "Users/" + student + "/" + course;
+    if(entry_exists(path + "categories.txt", category) == false){
+        return "";
+    }
+    path += "/" + category;
+    if(entry_exists(path + "updates.txt", update) == false){
+        return "";
+    }
+    path += "/" + update;
+    res += student + "-\n";
+    res += file_contents(path);
+    res += "-----------\n";
+    return res;
+}
