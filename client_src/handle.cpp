@@ -159,21 +159,32 @@ void handle_command(user usr)
             get_classwork(usr);
         else if (command == "people")
             get_people(usr);
-        else if (command == "showmy")
-            get_joined_courses(usr);
+        else if (command == "createpost")
+            create_post(usr);
+        else if (command == "viewallsubs")
+            view_all_submissions(usr);
+        else if (command == "viewparticularsubs")
+            view_particular_submission(usr);
+        else if (command == "viewpost")
+            view_post(usr);
+        else if (command == "downloadsub")
+            download_file(usr);
+        else if (command == "exitclass")
+            exit_class(usr);
+
+        //Student
+        else if (command == "viewsub")
+            view_submission(usr);
+        else if (command == "makesub")
+            exit_class(usr);
+        else if (command == "viewpost")
+            view_post(usr);
+
         //else if (command == "showmy") get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);
-        //create_post(usr);
-        //view_all_submissions(usr);
-        //view_particular_submission(usr);
-        //view_post(usr);
-        // download_file(usr);
-        //get_people(usr);
-        // get_classwork(usr);
-        // exit_class(usr);
 
         else
         {
