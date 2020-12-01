@@ -29,13 +29,14 @@ void recv_data(int cli_sock, string &header, string &data){
     char temp_buffer[BUF_SIZE];
     
     vector<string> strings_list = split_string(header);
+    string buffer;
     int data_to_recv = atoi(strings_list[2].c_str());
     while((data_to_recv > 0) && ((data_recv = recv(cli_sock, temp_buffer, BUF_SIZE, 0)) > 0)){
         if(data_recv < 0){
             perror("recv() failed");
         }
         temp_buffer[data_recv] = '\0';
-        string buffer = temp_buffer;
+        buffer = temp_buffer;
         data += buffer;
         data_to_recv -= data_recv;
     }

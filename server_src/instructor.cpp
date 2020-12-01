@@ -59,9 +59,8 @@ void instructor(User* usr, string classname){
                         header = "";
                         data = "";
                         recv_data(cli_sock, header, data);
-                        string filepath = curpath + "/" + filename + ".txt";
-                        create_file(filepath, filename + ".txt");
-                        add_to_file(filepath, data);
+                        create_file(curpath, filename);
+                        add_to_file(curpath + "/" + filename, data);
                         send_data(cli_sock, true, instructor_state);
                     }
                 }
@@ -85,9 +84,8 @@ void instructor(User* usr, string classname){
                         header = "";
                         data = "";
                         recv_data(cli_sock, header, data);
-                        string filepath = curpath + "/" + filename + ".txt";
-                        create_file(filepath, filename + ".txt");
-                        add_to_file(filepath, data);
+                        create_file(curpath, filename);
+                        add_to_file(curpath + "/" + filename, data);
                         send_data(cli_sock, true, instructor_state);
                     }
                 }
