@@ -53,6 +53,7 @@ void instructor(User* usr, string classname){
                     string update_info = deadline + "\n" + text; // First line of the info file contains deadline
                     create_file(curpath, "display_text.txt");
                     add_to_file(curpath + "/display_text.txt", update_info);
+                    create_file(curpath, "attachments.txt");
                     int num_files = stoi(data_list[5]);
                     for(int i = 0; i < num_files; i++){
                         string filename = data_list[6 + i];
@@ -61,6 +62,7 @@ void instructor(User* usr, string classname){
                         recv_data(cli_sock, header, data);
                         create_file(curpath, filename);
                         add_to_file(curpath + "/" + filename, data);
+                        add_to_file(curpath + "/attachments.txt", filename);
                         send_data(cli_sock, true, instructor_state);
                     }
                 }
@@ -97,7 +99,7 @@ void instructor(User* usr, string classname){
                 int type = stoi(data_list[0]);
                 string category = data_list[1];
                 string update_name = data_list[2];
-                view_classroom_update(cli_sock, type, category, update_name, classname);
+                view_classroom_update(cli_sock, type, category, update_name, classname, true);
             }
             else if(num == 1){
                 string category = data_list[0];
@@ -154,10 +156,10 @@ void instructor(User* usr, string classname){
                 }
             }
             else if(num == 4){
-                show_people_list(cli_sock, classname);
+                show_people_list(cli_sock, classname, true);
             }
             else if(num == 5){
-                show_classwork(cli_sock, classname);
+                show_classwork(cli_sock, classname, true);
             }
             else if(num == 7){
                 string log_in = LOGGED_IN;

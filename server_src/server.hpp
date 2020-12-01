@@ -71,9 +71,9 @@ int check_credentials(string username, string passwd);
 void logged_in(User *usr);
 void student(User* usr, string classname);
 void instructor(User* usr, string classname);
-void show_people_list(int cli_sock, string classname);
-void show_classwork(int cli_sock, string classname);
-void view_classroom_update(int cli_sock, int type, string category, string update_name, string classname);
+void show_people_list(int cli_sock, string classname, bool instructor);
+void show_classwork(int cli_sock, string classname, bool instructor);
+void view_classroom_update(int cli_sock, int type, string category, string update_name, string classname, bool instructor);
 void download_attachment(int cli_sock, int type, string category, string update_name, string classname, string filename);
 
 
@@ -92,8 +92,5 @@ bool check_pair(string username, string passwd);
 string file_contents(string filename); // Only those files that have a single word in every line
 vector<string> list_of_entries(string filename);
 string view_submission(string student, string course, string category, string update);
-void show_classwork(int cli_sock, string classname);
-void show_people_list(int cli_sock, string classname);
-void view_classroom_update(int cli_sock, int type, string category, string update_name, string classname);
 
 #endif /* SERVER_HPP */

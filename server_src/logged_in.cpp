@@ -60,6 +60,8 @@ int enroll(string classname, string username){
             create_file(personal_path + "/" + cat, "updates.txt");
             for(string upd : updates){
                 create_entry(personal_path + "/" + cat, personal_path + "/" + cat + "/updates.txt", upd);
+                create_file(personal_path + "/" + cat + "/" + upd, "submissions.txt");
+                create_file(personal_path + "/" + cat + "/" + upd, "grades.txt");
             }
         }
         return 1;

@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void show_classwork(int cli_sock, string classname){
+void show_classwork(int cli_sock, string classname, bool instructor){
 
     string type_1 = "Classrooms/" + classname + "/type_1/";
     string type_2 = "Classrooms/" + classname + "/type_2/";
@@ -45,11 +45,16 @@ void show_classwork(int cli_sock, string classname){
         }
         res += "---------------\n\n";
     }
-    res += STUDENT;
+    if(instructor){
+        res += INSTRUCTOR;
+    }
+    else{
+        res += STUDENT;
+    }
     send_data(cli_sock, true, res);
 }
 
-void show_people_list(int cli_sock, string classname){
+void show_people_list(int cli_sock, string classname, bool instructor){
     string student_path = "Classrooms/" + classname + "/students.txt";
     string instructor_path = "Classrooms/" + classname + "/instructors.txt";
 
@@ -62,10 +67,16 @@ void show_people_list(int cli_sock, string classname){
     res += file_contents(student_path);
     res += "--------------\n";
     res += STUDENT;
+    if(instructor){
+        res += INSTRUCTOR;
+    }
+    else{
+        res += STUDENT;
+    }
     send_data(cli_sock, true, res);
 }
 
-void view_classroom_update(int cli_sock, int type, string category, string update_name, string classname){
+void view_classroom_update(int cli_sock, int type, string category, string update_name, string classname, bool instructor){
     string path;
     if(type == 1){
         path = "Classrooms/" + classname + "/type_1/" + category + "/" + update_name;
@@ -75,13 +86,26 @@ void view_classroom_update(int cli_sock, int type, string category, string updat
     }
     if(access((path + "/display_text.txt").c_str(), F_OK) != 0){
         cout<<"Path does not exist"<<endl;
-        string res = STUDENT;
+        string res = "";
+        if(instructor){
+            res += INSTRUCTOR;
+        }
+        else{
+            res += STUDENT;
+        }
         send_data(cli_sock, false, res);
     }
     else{
         string res = file_contents(path + "/display_text.txt");
+        res += "\n--------------\nThese are the attachments present here-\n";
+        res += file_contents(path + "/attachments.txt");
         res += "\n--------------\n";
-        res += STUDENT;
+        if(instructor){
+            res += INSTRUCTOR;
+        }
+        else{
+            res += STUDENT;
+        }
         send_data(cli_sock, true, res);
     }
 }
@@ -138,6 +162,7 @@ void student(User* usr, string classname){
                 data = "";
                 recv_data(cli_sock, header, data);
                 add_to_file(subm_dir + "/" + filename, data);
+                add_to_file(subm_dir + "/submissions.txt", filename);
                 send_data(cli_sock, true, student_state);
             }
         }
@@ -147,12 +172,11 @@ void student(User* usr, string classname){
                 int type = stoi(data_list[0]);
                 string category = data_list[1];
                 string update_name = data_list[2];
-                view_classroom_update(cli_sock, type, category, update_name, classname);
+                view_classroom_update(cli_sock, type, category, update_name, classname, false);
             }
             else if(num == 2){
                 string category = data_list[0];
                 string update_name = data_list[1];
-                string path = "Classrooms/" + classname + "/type_1/" + category + "/" + update_name + "/" + "updates.txt";
                 string res = "Your submissions for " + update_name + " -\n";
                 res += view_submission(username, classname, category, update_name);
                 send_data(cli_sock, true, res);
@@ -165,10 +189,10 @@ void student(User* usr, string classname){
                 download_attachment(cli_sock, type, category, update_name, classname, filename);
             }
             else if(num == 4){
-                show_people_list(cli_sock, classname);
+                show_people_list(cli_sock, classname, false);
             }
             else if(num == 5){
-                show_classwork(cli_sock, classname);
+                show_classwork(cli_sock, classname, false);
             }
             else if(num == 6){
                 
