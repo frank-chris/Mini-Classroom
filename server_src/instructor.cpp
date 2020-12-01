@@ -143,7 +143,8 @@ void instructor(User* usr, string classname){
                 string filename = data_list[3];
                 string path = "Users/" + student_name +"/" + classname + "/" + category + "/" + update_name + "/" + filename;
                 if(access(path.c_str(), F_OK) != 0){
-                    send_data(cli_sock, false, "");
+                    send_file(cli_sock, false, "");
+                    send_data(cli_sock, false, INSTRUCTOR);
                 }
                 else{
                     send_file(cli_sock, true, path);

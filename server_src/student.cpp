@@ -157,6 +157,7 @@ void download_attachment(int cli_sock, int type, string category, string update_
         send_data(cli_sock, true, INSTRUCTOR);
     }
     else{
+        send_file(cli_sock, false, "");
         send_data(cli_sock, false, INSTRUCTOR);
     }
     
