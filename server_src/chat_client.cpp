@@ -87,7 +87,7 @@ void* chat_client(void* arg){
     int err = connect(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr));
     if (err == -1) {
 		printf("ERROR: connect\n");
-		return;
+		return NULL;
 	}
 
     // Send name
@@ -98,13 +98,13 @@ void* chat_client(void* arg){
     pthread_t send_msg_thread;
     if(pthread_create(&send_msg_thread, NULL, send_msg_handler, chat_user) != 0){
 		printf("ERROR: pthread\n");
-        return;
+        return NULL;
 	}
 
 	pthread_t recv_msg_thread;
     if(pthread_create(&recv_msg_thread, NULL, recv_msg_handler, chat_user) != 0){
 		printf("ERROR: pthread\n");
-		return;
+		return NULL;
 	}
 
 	while (true){
@@ -115,5 +115,5 @@ void* chat_client(void* arg){
 
 	close(sockfd);
 
-	return;
+	return NULL;
 }

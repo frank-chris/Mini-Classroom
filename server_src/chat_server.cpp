@@ -159,19 +159,19 @@ void* chat_server(void* arg){
 
 	if(setsockopt(listenfd, SOL_SOCKET,(SO_REUSEPORT | SO_REUSEADDR),(char*)&option,sizeof(option)) < 0){
 		perror("ERROR: setsockopt failed");
-        return;
+        return NULL;
 	}
 
 	/* Bind */
     if(bind(listenfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
         perror("ERROR: Socket binding failed");
-        return;
+        return NULL;
     }
 
     /* Listen */
     if (listen(listenfd, 10) < 0) {
         perror("ERROR: Socket listening failed");
-        return;
+        return NULL;
 	}
 
     cout<<"\nChat server set up\n";
