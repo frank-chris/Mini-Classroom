@@ -11,17 +11,17 @@ void create_post(user usr)
     cin >> type;
     cout << "Category:    " << flush;
     cin >> category;
-    cout << "Assignment Name:    " << flush;
+    cout << "Name:    " << flush;
     cin >> assignment_name;
 
     if (type == 1)
     {
         cout << "Deadline:    " << flush;
         cin >> deadline;
-        cin.ignore();
-        cout << "Description:    " << flush;
-        getline(cin, desc);
     }
+    cin.ignore();
+    cout << "Description:    " << flush;
+    getline(cin, desc);
 
     cout << "Number of Files:    " << flush;
     cin >> num_files;
@@ -60,7 +60,9 @@ void create_post(user usr)
     char *header = join_str_int(sub_header, len);
 
     send_request(usr, header, to_send, len);
-    get_response(usr);
+    if(num_files > 0){
+        get_response(usr);
+    }
 
     for (int i = 0; i < num_files; i++)
     {
