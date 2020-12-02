@@ -129,6 +129,8 @@ void* chat_client(void* arg){
 
 	while (true){
 		if(flag){
+            pthread_cancel(send_msg_thread);
+            pthread_cancel(recv_msg_thread);
 			break;
         }
 	}
