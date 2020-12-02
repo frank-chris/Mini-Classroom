@@ -43,7 +43,7 @@ void join_chat_session(user usr)
     string code;
     cout << "Enter code:   " << flush;
     cin >> code;
-
+    int p_code = stoi(code);
     string to_send = code;
     int len = to_send.length();
 
@@ -53,7 +53,7 @@ void join_chat_session(user usr)
     send_request(usr, header, to_send, len);
 
     pthread_t chat_thread;
-    if (pthread_create(&chat_thread, NULL, chat_client, NULL) != 0)
+    if (pthread_create(&chat_thread, NULL, chat_client, &p_code) != 0)
     {
         perror("thread creation error");
         return;

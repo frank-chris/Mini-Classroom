@@ -149,10 +149,10 @@ void* handle_chat_client(void *arg){
 }
 
 void* chat_server(void* arg){
-    User* chat_user = (User*)arg;
+    chat_arg* chat_user = (chat_arg*)arg;
 
     const char *ip = "127.0.0.1";
-	int port = CHAT_PORT;
+	int port = chat_user->p_code + 8500;
 	int option = 1;
 	int listenfd = 0, connfd = 0;
     struct sockaddr_in serv_addr;
