@@ -12,6 +12,7 @@ char *join_str_int(char *req, int len)
     return req;
 }
 
+//function to break string by a delimeter
 vector<string> split_string(string s)
 {
     stringstream ss(s);
@@ -24,6 +25,10 @@ vector<string> split_string(string s)
     return all;
 }
 
+/*
+Returns the file size of the file present on the path.
+It returns -1 in case of an error
+*/
 int get_file_size(string path)
 {
     struct stat st;
@@ -35,6 +40,9 @@ int get_file_size(string path)
     return st.st_size;
 }
 
+/*
+(Diasable echoing) Hides the password typed by the user 
+*/
 char getch_pwd()
 {
     char buf = 0;

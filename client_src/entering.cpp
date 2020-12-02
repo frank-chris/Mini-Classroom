@@ -1,5 +1,6 @@
 #include "client.hpp"
 
+//Handles create classroom user command
 void create_classroom(user usr)
 {
     string cl_name;
@@ -14,6 +15,7 @@ void create_classroom(user usr)
     send_request(usr, header, cl_name, len);
 }
 
+//Handles get all courses user command
 void get_all_courses(user usr)
 {
     int len = 0;
@@ -23,6 +25,7 @@ void get_all_courses(user usr)
     send_request(usr, header, "", len);
 }
 
+//Handles enrollment in a course
 void enrol_classroom(user usr)
 {
     string cl_name;
@@ -37,6 +40,7 @@ void enrol_classroom(user usr)
     send_request(usr, header, cl_name, len);
 }
 
+//Handles the viewing of classroom by a user
 void enter_classroom(user usr)
 {
     string cl_name;
@@ -51,6 +55,7 @@ void enter_classroom(user usr)
     send_request(usr, header, cl_name, len);
 }
 
+//Displays a list of the courses that the user has joined
 void get_joined_courses(user usr)
 {
     int len = 0;
@@ -60,6 +65,7 @@ void get_joined_courses(user usr)
     send_request(usr, header, "", len);
 }
 
+//Logs the user out 
 void logout_user (user usr)
 {
     int len = 0;

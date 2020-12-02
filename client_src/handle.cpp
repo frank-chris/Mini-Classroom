@@ -4,6 +4,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+/* 
+Gets a file from the server and saves it in the downloads folder
+*/
 int get_response_file(user usr, string file_name)
 {
     char buffer[BUFSIZE + 1];
@@ -36,6 +39,7 @@ int get_response_file(user usr, string file_name)
     }
 
     int rec_bytes = 0;
+    //receive file of length stored in the variable len
     while (rec_bytes < len)
     {
         num_bytes = read(usr.sock, buffer, min(BUFSIZE, len - rec_bytes));
@@ -45,11 +49,14 @@ int get_response_file(user usr, string file_name)
         rec_bytes += num_bytes;
         fwrite(buffer, 1, num_bytes, fp);
     }
-    fclose (fp);
+    fclose(fp);
 
     return 0;
 }
 
+/*
+Gets a text response from the server for a request
+*/
 int get_response(user usr)
 {
     char buffer[BUFSIZE + 1];
@@ -88,9 +95,13 @@ int get_response(user usr)
     return 0;
 }
 
+/*
+Sends request to the server, comes from the command entered by the user
+*/
 int send_request(user usr, char *header, string data, int len)
 {
 
+    //Sends fixed 1024 bytes of header to the server
     int num_bytes = send(usr.sock, header, 1024, 0);
     if (num_bytes < 0)
     {
@@ -111,6 +122,9 @@ int send_request(user usr, char *header, string data, int len)
     return 0;
 }
 
+/*
+Sends a file to the server
+*/
 int send_file(user usr, string path, int len)
 {
     int read_fd = open(path.c_str(), O_RDONLY);
@@ -121,6 +135,10 @@ int send_file(user usr, string path, int len)
     return 0;
 }
 
+/*
+Main checking function which handles and maps the command entered 
+by the user to the appropriate functions
+*/
 void handle_command(user usr)
 {
     string command;
@@ -198,6 +216,9 @@ void handle_command(user usr)
     } while (valid == false);
 }
 
+/*
+Top of the hierarchy for the command handler functions
+*/
 void handle_user(user usr)
 {
     char buffer[BUFSIZE + 1];

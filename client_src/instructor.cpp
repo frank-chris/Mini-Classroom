@@ -1,6 +1,6 @@
 #include "client.hpp"
 
-
+//Handles the create post feature of the instructor
 void create_post(user usr)
 {
     //Modify this in accordance with types
@@ -71,7 +71,7 @@ void create_post(user usr)
     }
 }
 
-
+//Handles the initiation of chat session by the user
 void chat_session(user usr)
 {
     string code;
@@ -101,6 +101,7 @@ void chat_session(user usr)
     send_request(usr, header, to_send, len);
 }
 
+//Uploads attachments posted by the Instructor
 void upload_file(user usr)
 {
     string path;
@@ -117,6 +118,7 @@ void upload_file(user usr)
     send_file(usr, path, len);
 }
 
+//Displays all submissions to the Instructor
 void view_all_submissions(user usr)
 {
     string category, assignment_name;
@@ -134,6 +136,7 @@ void view_all_submissions(user usr)
     send_request(usr, header, to_send, len);
 }
 
+//Received commands to isplay a particular student's submission
 void view_particular_submission(user usr)
 {
     string category, assignment_name, student;
@@ -153,6 +156,7 @@ void view_particular_submission(user usr)
     send_request(usr, header, to_send, len);
 }
 
+//Handles th view post feature of both Instructor and Client
 void view_post(user usr)
 {
     string type, category, assignment_name;
@@ -172,6 +176,7 @@ void view_post(user usr)
     send_request(usr, header, to_send, len);
 }
 
+//Handles the download file request of the Instructor
 void download_file(user usr)
 {
     string category, assignment_name, student, file_name;
@@ -194,6 +199,7 @@ void download_file(user usr)
     get_response_file(usr, file_name);
 }
 
+//Handles the request for displaying the list of people joined
 void get_people(user usr)
 {
     int len = 0;
@@ -204,6 +210,7 @@ void get_people(user usr)
     send_request(usr, header, "", len);
 }
 
+//Handles the request for displaying the list of posts shared by instructor
 void get_classwork(user usr)
 {
     int len = 0;
@@ -214,6 +221,7 @@ void get_classwork(user usr)
     send_request(usr, header, "", len);
 }
 
+//Used to exit a class and going back to the outline view
 void exit_class(user usr)
 {
     int len = 0;

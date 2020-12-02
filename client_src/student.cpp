@@ -1,5 +1,9 @@
 #include "client.hpp"
 
+/*
+Handles the request for displaying the submissions for
+a particular post made by the logged in student
+*/
 void view_submission(user usr)
 {
     string category, assignment_name;
@@ -17,6 +21,10 @@ void view_submission(user usr)
     send_request(usr, header, to_send, len);
 }
 
+/*
+Handles the request for making a submission for a
+particular post made by the logged in student
+*/
 void make_submission(user usr)
 {
     string category, assignment_name, file_name;
@@ -38,6 +46,10 @@ void make_submission(user usr)
     upload_file(usr);
 }
 
+/*
+Handles the student's request for joining a live chat session 
+initiated by the Instructor
+*/
 void join_chat_session(user usr)
 {
     string code;
@@ -66,6 +78,10 @@ void join_chat_session(user usr)
     send_request(usr, header, to_send, len);
 }
 
+/*
+Handles the student's request for downloading the attachments
+uploaded by the instructor for a course
+*/
 void download_attachment(user usr)
 {
     string type, category, assignment_name, filename;

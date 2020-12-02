@@ -1,5 +1,8 @@
 #include "client.hpp"
 
+/*
+Handles the authentication of an existing user
+*/
 void login_user(user usr)
 {
     string username, password;
@@ -31,6 +34,9 @@ void login_user(user usr)
     send_request(usr, header, cred, len);
 }
 
+/*
+Handles the request for a new user
+*/
 void register_user(user usr)
 {
     string username, password, password_temp;

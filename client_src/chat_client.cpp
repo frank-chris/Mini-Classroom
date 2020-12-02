@@ -34,6 +34,9 @@ void str_trim_lf(char* arr, int length)
     }
 }
 
+/*
+Handles the send message thread
+*/
 void* send_msg_handler(void* arg) {
 
     char message[LENGTH] = {};
@@ -60,6 +63,9 @@ void* send_msg_handler(void* arg) {
     return NULL;
 }
 
+/*
+Handles the receive message thread
+*/
 void* recv_msg_handler(void* arg) {
     
 	char message[LENGTH] = {};

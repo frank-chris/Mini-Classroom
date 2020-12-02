@@ -3,7 +3,7 @@
 */
 #include "client.hpp"
 
-
+//Default port to connect to
 int PORT = 8080;
 
 int main(int argc, char const *argv[])
@@ -23,6 +23,7 @@ int main(int argc, char const *argv[])
 	struct sockaddr_in serv_addr;
 
 	char buffer[1024] = {0};
+	//Creating socket
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
 		printf("\n Socket creation error \n");
@@ -39,6 +40,7 @@ int main(int argc, char const *argv[])
 		return -1;
 	}
 
+	//Connect with the server
 	if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
 	{
 		printf("\nConnection Failed \n");
@@ -46,21 +48,20 @@ int main(int argc, char const *argv[])
 	}
 
 	user usr;
-	usr.sock = sock;
-	if (argc==3)
-		usr.rd_from_file = 0;
-	else usr.rd_from_file = 1;
-	handle_user(usr);
-	//while (1)
-	//{
-		//string hello;
-		//cin>>hello; memset(buffer, '\0', sizeof (buffer));
-		//send(sock , hello.c_str() , hello.length() , 0 );
-		//printf("Hello message sent\n");
 
-		//valread = read( sock , buffer, 1024);
-		//cout<<valread<<endl;
-		//printf("%s\n",buffer );
-	//}
+	usr.sock = sock;
+
+	if (argc==3)
+	{
+		usr.rd_from_file = 0;
+	}
+	else 
+	{
+		usr.rd_from_file = 1;
+	}
+
+	//Handles the requests and response for the client
+	handle_user(usr);
+
 	return 0;
 }

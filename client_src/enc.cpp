@@ -5,6 +5,9 @@
 #include <algorithm>
 using namespace std;
 
+/*
+This encryption uses a substitution cypher.
+*/
 vector <int> rd = {
     124, 83, 43, 101, 56, 67, 49, 68, 58, 82, 99, 71, 115, 34, 107, 88, 91, 50, 64, 72, 123, 118,
     89, 44, 46, 74, 59, 94, 95, 90, 62, 110, 45, 100, 35, 119, 103, 96, 41, 54, 98, 112, 52, 111,
@@ -22,6 +25,9 @@ void init_enc_decr(){
         }
 }
 
+/*
+converts the input string to its encrypted form
+*/
 string encrypt(string inp){
     if (enc.size()==0){
         init_enc_decr();
@@ -34,7 +40,9 @@ string encrypt(string inp){
     }
     return out;
 }
-
+/*
+converts the decoded string to the originial string
+*/
 string decrypt (string out){
     if (enc.size()==0){
         init_enc_decr();
@@ -49,15 +57,3 @@ string decrypt (string out){
     return inp;
 }
 
-
-//int main(){
-
-    //string a = "abcdefghijklmnopqrstuvwxyz | ABCDEFGHIJKLMNOPQRSTUVWXYZ;/,.:1234567890 | []?>,,.";
-    //string b = encrypt(a);
-    //string c = decrypt(b);
-
-    //cout<<b<<endl;
-    //cout<<c<<endl;
-
-    //return 0;
-//}
