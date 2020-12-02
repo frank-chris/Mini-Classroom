@@ -128,4 +128,8 @@ string file_contents(string filename); // Only those files that have a single wo
 vector<string> list_of_entries(string filename);
 string view_submission(string student, string course, string category, string update);
 
+//enc
+string encrypt (string);
+string decrypt (string);
+
 #endif /* SERVER_HPP */

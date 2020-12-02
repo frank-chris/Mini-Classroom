@@ -48,8 +48,9 @@ void register_user(user usr)
         ch = '\0';
         while (1)
         {
-            if (usr.rd_from_file)
+            if (usr.rd_from_file){
                 ch = getchar();
+            }
             else
                 ch = getch_pwd();
             if (ch == '\n')
