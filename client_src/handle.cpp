@@ -45,7 +45,7 @@ int get_response_file(user usr, string file_name)
         rec_bytes += num_bytes;
         fwrite(buffer, 1, num_bytes, fp);
     }
-    cout << endl;
+    fclose (fp);
 
     return 0;
 }
