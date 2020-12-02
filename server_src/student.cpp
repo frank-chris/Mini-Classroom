@@ -201,6 +201,10 @@ void student(User* usr, string classname){
                 send_data(cli_sock, true, log_in);
                 logged_in(usr);
             }
+            else if(num == 8){
+                sleep(1);
+                chat_client(usr);
+            }
         }
     }
 }

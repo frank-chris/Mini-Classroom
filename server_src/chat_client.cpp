@@ -11,9 +11,6 @@
 #include <iostream>
 #include "server.hpp"
 
-#define LENGTH 2048
-#define CHAT_PORT 9000
-
 using namespace std;
 
 volatile sig_atomic_t flag = 0;

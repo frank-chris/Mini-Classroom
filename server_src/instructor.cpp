@@ -166,6 +166,12 @@ void instructor(User* usr, string classname){
                 send_data(cli_sock, true, log_in);
                 logged_in(usr);
             }
+            else if(num == 8){
+                pthread_t chat_server_thread;
+                pthread_create(&chat_server_thread, NULL, chat_server, usr);
+                sleep(1);
+                chat_client(usr);
+            }
         }
     }
 }

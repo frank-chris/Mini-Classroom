@@ -5,9 +5,16 @@ using namespace std;
 
 #include <string>
 #include <vector>
+#include <netinet/in.h>
 
 #define SPLITTER '|'
 #define BUF_SIZE 1024
+
+// Chat defines
+#define LENGTH 2048
+#define CHAT_PORT 9000
+#define MAX_CLIENTS 100
+#define BUFFER_SZ 2048
 
 // Prompt messages sent for each state. Note that these defines are of const char[] type, so better
 // convert them to string first
@@ -58,10 +65,30 @@ typedef struct User{
     bool active;
 }User;
 
+/* Chat client structure */
+typedef struct{
+	struct sockaddr_in address;
+	int sockfd;
+	int uid;
+	char name[32];
+    int cli_sock;
+} client_t;
+
 // Filesystem functions
 void initFS();
 void makedir(string path, string dirname);
 void create_file(string path, string filename);
+
+// Chat functions
+void queue_add(client_t *cl);
+void queue_remove(int uid);
+void send_message(char *s, int uid);
+void* handle_chat_client(void *arg);
+void* chat_server(void* arg);
+void* send_msg_handler(void* arg);
+void* recv_msg_handler(void* arg);
+void* chat_client(void* arg);
+
 
 // Server functions
 void *new_client_thread(void* arg);

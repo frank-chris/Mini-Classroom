@@ -12,24 +12,12 @@
 #include <iostream>
 #include "server.hpp"
 
-#define MAX_CLIENTS 100
-#define BUFFER_SZ 2048
-#define CHAT_PORT 9000
 
 using namespace std;
 
 volatile sig_atomic_t cli_count = 0;
 static int uid = 10;
 volatile sig_atomic_t queue_modified = 0;
-
-/* Client structure */
-typedef struct{
-	struct sockaddr_in address;
-	int sockfd;
-	int uid;
-	char name[32];
-    int cli_sock;
-} client_t;
 
 client_t *clients[MAX_CLIENTS];
 

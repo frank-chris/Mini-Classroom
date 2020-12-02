@@ -173,6 +173,8 @@ void handle_command(user usr)
             download_file(usr);
         else if (command == "exitclass")
             exit_class(usr);
+        else if (command == "createsession")
+            chat_session(usr, 0);
 
         //Student
         else if (command == "viewsub")
@@ -181,6 +183,8 @@ void handle_command(user usr)
             make_submission(usr);
         else if (command == "viewpost")
             view_post(usr);
+        else if (command == "joinsession")
+            chat_session(usr, 1);
 
         //else if (command == "showmy") get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);

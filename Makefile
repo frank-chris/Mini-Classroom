@@ -22,7 +22,7 @@ ${S_BIN}: ${S_SRCS}
 
 ${C_BIN}: ${C_SRCS}
 	@echo "Building..."
-	${CC} -o $@ $^
+	${CC} -o $@ $^ ${LINKERFLAG}
 
 clean:
 	@echo "Cleaning..."

@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <unistd.h>
+#include <pthread.h>
 #define BUFSIZE 1024
 #define delim '|'
 
@@ -53,6 +54,9 @@ void download_file(user);
 void get_people(user);
 void get_classwork(user);
 void exit_class(user);
+void* send_chat(void*);
+void* recv_chat(void*);
+void chat_session(user, int);
 
 //student
 void view_submission(user);
