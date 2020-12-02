@@ -37,7 +37,9 @@ using namespace std;
     To make a submission for a work, type makesub \n\
     To view a classroom post, type viewpost \n\
     To download an attachment, type downloadattachment \n\
-    To logout of the class,  type exitclass \n"
+    To logout of the class,  type exitclass \n\
+    To join a chat session, type joinsession\n\
+    Once logged in, press exit to exit the chat\n"
 
 
 #define INSTRUCTOR "\n\nYou have entered the classroom, you can perform the following actions-\n\
@@ -48,7 +50,9 @@ using namespace std;
     To view a particular student’s submission, type viewparticularsubs \n\
     To view a classroom post, type viewpost \n\
     To download a student’s submission, type downloadsub \n\
-    To logout of the class, type exitclass \n"
+    To logout of the class, type exitclass \n\
+    To create a chat session, type createsession\n\
+    Once logged in, press exit to exit the chat\n"
 
 
 #include <bits/stdc++.h>

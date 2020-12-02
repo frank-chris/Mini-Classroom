@@ -74,4 +74,8 @@ void view_submission(user);
 void make_submission(user);
 void download_attachment(user);
 
+//enc
+string encrypt(string);
+string decrypt(string);
+
 #endif /* CLIENT_HPP */

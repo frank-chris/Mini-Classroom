@@ -22,7 +22,7 @@ void login_user(user usr)
         cout << "*" << flush;
     }
     cout << endl;
-
+    password = encrypt (password);
     int len = username.length() + password.length() + 1;
     char sub_header[1024] = "SEND|0|";
     char *header = join_str_int(sub_header, len);
@@ -85,7 +85,7 @@ void register_user(user usr)
         else
             valid = true;
     }
-
+    password = encrypt (password);
     int len = username.length() + password.length() + 1;
     char sub_header[1024] = "SEND|1|";
     char *header = join_str_int(sub_header, len);
