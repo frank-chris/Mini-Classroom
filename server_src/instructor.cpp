@@ -170,6 +170,9 @@ void instructor(User* usr, string classname){
                 pthread_t chat_server_thread;
                 pthread_create(&chat_server_thread, NULL, chat_server, usr);
             }
+            else if(num == 9){
+                send_data(cli_sock, true, INSTRUCTOR);
+            }
         }
     }
 }

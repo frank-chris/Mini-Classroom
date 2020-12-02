@@ -45,6 +45,7 @@ void* send_msg_handler(void* arg) {
         str_trim_lf(message, LENGTH);
 
         if (strcmp(message, "exit") == 0) {
+            send(sockfd, message, strlen(message), 0);
             break;
         } 
         else {

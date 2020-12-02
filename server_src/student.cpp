@@ -202,7 +202,10 @@ void student(User* usr, string classname){
                 logged_in(usr);
             }
             else if(num == 8){
-                
+                sleep(1);
+            }
+            else if(num == 9){
+                send_data(cli_sock, true, STUDENT);
             }
         }
     }

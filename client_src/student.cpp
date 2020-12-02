@@ -43,6 +43,14 @@ void join_chat_session(user usr)
     cout << "Enter code:   " << flush;
     cin >> code;
 
+    string to_send = code;
+    int len = to_send.length();
+
+    char sub_header[1024] = "ASK|8|";
+    char *header = join_str_int(sub_header, len);
+
+    send_request(usr, header, to_send, len);
+
     pthread_t chat_thread;
     if(pthread_create(&chat_thread, NULL, chat_client, NULL) != 0){
 		perror("thread creation error");
@@ -51,4 +59,7 @@ void join_chat_session(user usr)
 
     pthread_join(chat_thread, NULL);
 
+    strcpy(sub_header, "ASK|9|");
+    header = join_str_int(sub_header, len);
+    send_request(usr, header, to_send, len);
 }

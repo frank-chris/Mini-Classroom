@@ -96,6 +96,9 @@ void chat_session(user usr)
 
     pthread_join(chat_thread, NULL);
 
+    strcpy(sub_header, "ASK|9|");
+    header = join_str_int(sub_header, len);
+    send_request(usr, header, to_send, len);
 }
 
 void upload_file(user usr)
