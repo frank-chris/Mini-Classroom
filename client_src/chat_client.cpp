@@ -87,7 +87,7 @@ void* recv_msg_handler(void* arg) {
 void* chat_client(void* arg){
 
     const char *ip = "127.0.0.1";
-	int port = CHAT_PORT;
+	int port = (*(int*)arg) + 8500;
 
     cout << "Enter username:   " << flush;
     cin >> name;

@@ -65,6 +65,13 @@ typedef struct User{
     bool active;
 }User;
 
+typedef struct chat_arg{
+    int cli_sock;
+    string name;
+    bool active;
+    int p_code;
+}chat_arg;
+
 /* Chat client structure */
 typedef struct{
 	struct sockaddr_in address;
