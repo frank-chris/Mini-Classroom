@@ -2,9 +2,10 @@
 # make all		 # compile all files 
 # make clean # cleanup
 
-.PHONY = all clean
+.PHONY = all clean mininet cleanf
 
 CC = g++
+PYTHON = python3
 
 LINKERFLAG = -lpthread
 
@@ -24,10 +25,15 @@ ${C_BIN}: ${C_SRCS}
 	@echo "Building..."
 	${CC} -o $@ $^ ${LINKERFLAG}
 
+mininet: all
+	@mkdir mininet_test/workloads
+	${PYTHON} mininet_test/create_workload.py
+	sudo ${PYTHON} mininet_test/mininet_testing.py
+
 clean:
 	@echo "Cleaning..."
-	@rm -rvf ${S_BIN} ${C_BIN}
-	@rm -rvf Users Classrooms
+	@sudo rm -rvf ${S_BIN} ${C_BIN}
+	@sudo rm -rvf Users Classrooms mininet_test/workloads
 
 cleanf:
-	@rm -rvf Users Classrooms
+	@sudo rm -rvf Users Classrooms mininet_test/workloads

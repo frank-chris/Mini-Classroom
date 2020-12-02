@@ -4,7 +4,7 @@ list_names = []
 commands = ["register", "create", "showall", "join", "classwork", "people", "createpost", "viewpost", "exitclass", "showmy"]
 def workload():
     for i in range (16):
-        f1 = open("workloads/workload" + str(i) + ".txt", "w")
+        f1 = open("mininet_test/workloads/workload" + str(i) + ".txt", "w")
         for j in range (10):
             f1.write(commands[j] + "\n")
             if commands[j] == "register":
