@@ -30,5 +30,4 @@ clean:
 	@rm -rvf Users Classrooms
 
 cleanf:
-	@rm -rvf ${S_BIN} ${C_BIN}
 	@rm -rvf Users Classrooms
