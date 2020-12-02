@@ -193,6 +193,7 @@ void handle_command(user usr)
         {
             valid = false;
             cout << "Invalid command" << endl;
+            sleep(1);
         }
     } while (valid == false);
 }

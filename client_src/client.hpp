@@ -21,6 +21,7 @@ using namespace std;
 struct user
 {
     int sock;
+    int rd_from_file;
 };
 
 //utils

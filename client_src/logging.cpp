@@ -12,8 +12,10 @@ void login_user(user usr)
     cin.ignore();
     while (1)
     {
-
-        ch = getch_pwd();
+        if (usr.rd_from_file)
+            ch = getchar();
+        else
+            ch = getch_pwd();
         if (ch == '\n')
             break;
         password = password + ch;
@@ -46,7 +48,10 @@ void register_user(user usr)
         ch = '\0';
         while (1)
         {
-            ch = getch_pwd();
+            if (usr.rd_from_file)
+                ch = getchar();
+            else
+                ch = getch_pwd();
             if (ch == '\n')
                 break;
             password = password + ch;
@@ -60,7 +65,10 @@ void register_user(user usr)
         ch = '\0';
         while (1)
         {
-            ch = getch_pwd();
+            if (usr.rd_from_file)
+                ch = getchar();
+            else
+                ch = getch_pwd();
             if (ch == '\n')
                 break;
             password_temp = password_temp + ch;

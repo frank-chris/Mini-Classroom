@@ -8,10 +8,14 @@ int PORT = 8080;
 
 int main(int argc, char const *argv[])
 {
-	if (argc != 3)
+	if (argc != 3 && argc!=4)
 	{
 		cerr<<"Invalid number of arguments"<<endl;
 		exit (-1);
+	}
+	if (argc==4){
+		string fl = argv[3];
+		freopen(fl.c_str(), "r", stdin);
 	}
 	int sock = 0, valread;
 	string serv_ip = argv[1];
@@ -43,6 +47,9 @@ int main(int argc, char const *argv[])
 
 	user usr;
 	usr.sock = sock;
+	if (argc==3)
+		usr.rd_from_file = 0;
+	else usr.rd_from_file = 1;
 	handle_user(usr);
 	//while (1)
 	//{
