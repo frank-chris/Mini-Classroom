@@ -26,6 +26,8 @@ void *new_client_thread(void* arg){
 	cout<<"\nThread spawned\n";
 	
     handle_client(usr);
+
+	return NULL;
 }
 
 int main(int argc, char const *argv[])

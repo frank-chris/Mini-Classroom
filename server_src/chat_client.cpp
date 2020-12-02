@@ -24,7 +24,7 @@ void* send_msg_handler(void* arg) {
     User* chat_user = (User*)arg;
 
     char message[LENGTH] = {};
-	char buffer[LENGTH + 32] = {};
+	char buffer[LENGTH + 32 + 32] = {};
 
     while(true) {
         string header;
@@ -45,6 +45,7 @@ void* send_msg_handler(void* arg) {
         bzero(buffer, LENGTH + 32);
     }
     flag = 1;
+    return NULL;
 }
 
 void* recv_msg_handler(void* arg) {
@@ -64,13 +65,14 @@ void* recv_msg_handler(void* arg) {
         }
         memset(message, 0, sizeof(message));
     }
+    return NULL;
 }
 
 void* chat_client(void* arg){
 
     User* chat_user = (User*)arg;
 
-    char *ip = "127.0.0.1";
+    const char *ip = "127.0.0.1";
 	int port = CHAT_PORT;
 
     strcpy(name, chat_user->name.c_str());

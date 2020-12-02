@@ -66,7 +66,6 @@ void show_people_list(int cli_sock, string classname, bool instructor){
     res += "Students-\n";
     res += file_contents(student_path);
     res += "--------------\n";
-    res += STUDENT;
     if(instructor){
         res += INSTRUCTOR;
     }

@@ -27,4 +27,4 @@ ${C_BIN}: ${C_SRCS}
 clean:
 	@echo "Cleaning..."
 	@rm -rvf ${S_BIN} ${C_BIN}
-	@rm -rv Users Classrooms
+	@rm -rvf Users Classrooms
