@@ -151,7 +151,6 @@ void* handle_chat_client(void *arg){
 void* chat_server(void* arg){
     chat_arg* chat_user = (chat_arg*)arg;
 
-    const char *ip = "127.0.0.1";
 	int port = chat_user->p_code + 8500;
 	int option = 1;
 	int listenfd = 0, connfd = 0;
@@ -162,7 +161,7 @@ void* chat_server(void* arg){
     /* Socket settings */
     listenfd = socket(AF_INET, SOCK_STREAM, 0);
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = inet_addr(ip);
+    serv_addr.sin_addr.s_addr = inet_addr(server_ip);
     serv_addr.sin_port = htons(port);
 
 	signal(SIGPIPE, SIG_IGN);

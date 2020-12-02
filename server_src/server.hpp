@@ -57,6 +57,8 @@ using namespace std;
 
 #include <bits/stdc++.h>
 
+extern const char* server_ip;
+
 typedef struct sockets
 {
     int cli_sock;

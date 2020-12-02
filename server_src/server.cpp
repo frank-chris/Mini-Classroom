@@ -15,6 +15,8 @@
 
 #define PORT 8080
 
+const char* server_ip = "";
+
 using namespace std;
 
 void *new_client_thread(void* arg){
@@ -43,7 +45,7 @@ int main(int argc, char const *argv[])
         initFS();
     }
 
-	const char* server_ip = argv[1];
+	server_ip = argv[1];
 	int server_fd, new_socket;
 	struct sockaddr_in address;
 	int opt = 1;

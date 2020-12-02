@@ -3,6 +3,8 @@
 */
 #include "client.hpp"
 
+string serv_ip = "";
+
 //Default port to connect to
 int PORT = 8080;
 
@@ -18,7 +20,7 @@ int main(int argc, char const *argv[])
 		freopen(fl.c_str(), "r", stdin);
 	}
 	int sock = 0, valread;
-	string serv_ip = argv[1];
+	serv_ip = argv[1];
 	PORT = atoi(argv[2]);
 	struct sockaddr_in serv_addr;
 

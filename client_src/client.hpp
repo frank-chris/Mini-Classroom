@@ -18,6 +18,8 @@
 
 using namespace std;
 
+extern string serv_ip;
+
 struct user
 {
     int sock;
