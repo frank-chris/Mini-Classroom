@@ -34,6 +34,7 @@ void make_submission(user usr)
     char *header = join_str_int(sub_header, len);
 
     send_request(usr, header, to_send, len);
+    get_response(usr);
     upload_file(usr);
 }
 

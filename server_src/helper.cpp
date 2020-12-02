@@ -11,6 +11,7 @@
 #include <string>
 #include <fstream>
 #include "server.hpp"
+#include <sys/stat.h>
 
 using namespace std;
 
@@ -79,6 +80,17 @@ string file_contents(string filename){
     return res;
 }
 
+string read_file(string filename){
+    ifstream f(filename);
+    string res;
+    if(f){
+        ostringstream ss;
+        ss << f.rdbuf();
+        res = ss.str();
+    }
+    return res;
+}
+
 vector<string> list_of_entries(string filename){
     ifstream infile(filename);
     vector<string> res;
@@ -101,7 +113,14 @@ string view_submission(string student, string course, string category, string up
     }
     path += "/" + update;
     res += student + "-\n";
-    res += file_contents(path + "/submissions.txt");
+    res += read_file(path + "/submissions.txt");
+    struct stat buf;
+    stat(((path + "/submissions.txt").c_str()), &buf);
+    res += "Submission time: ";
+    time_t modif = buf.st_mtime;
+    res += (asctime(localtime(&modif)));
+    res += "\n";
+
     res += "-----------\n";
     return res;
 }

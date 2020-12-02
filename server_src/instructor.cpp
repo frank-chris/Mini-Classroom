@@ -81,6 +81,7 @@ void instructor(User* usr, string classname){
                     string update_info = text; 
                     create_file(curpath, "display_text.txt");
                     add_to_file(curpath + "/display_text.txt", update_info);
+                    create_file(curpath, "attachments.txt");
                     int num_files = stoi(data_list[4]);
                     for(int i = 0; i < num_files; i++){
                         string filename = data_list[5 + i];
@@ -89,6 +90,7 @@ void instructor(User* usr, string classname){
                         recv_data(cli_sock, header, data);
                         create_file(curpath, filename);
                         add_to_file(curpath + "/" + filename, data);
+                        add_to_file(curpath + "/attachments.txt", filename);
                         send_data(cli_sock, true, instructor_state);
                     }
                 }
@@ -116,11 +118,15 @@ void instructor(User* usr, string classname){
                     send_data(cli_sock, false, INSTRUCTOR);
                     continue;
                 }
+                curpath += "/" + update_name;
                 string res = "Submissions for " + update_name + " -\n--------------\n";
-                vector<string> students = list_of_entries(curpath + "/students.txt");
+                cout<<curpath + "/students.txt"<<endl;
+                vector<string> students = list_of_entries("Classrooms/" + classname + "/students.txt");
                 for(string student : students){
+                    cout<<student<<endl;
                     res += view_submission(student, classname, category, update_name);
                 }
+                res += INSTRUCTOR;
                 send_data(cli_sock, true, res);
             }
             else if(num == 2){
@@ -139,6 +145,7 @@ void instructor(User* usr, string classname){
                 }
                 string res = "Submissions for " + update_name + " -\n--------------\n";
                 res += view_submission(student_name, classname, category, update_name);
+                res += INSTRUCTOR;
                 send_data(cli_sock, true, res);
             }
             else if(num == 3){

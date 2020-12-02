@@ -26,7 +26,7 @@ int get_response_file(user usr, string file_name)
          << endl;
 
     int len = atoi(keys[1].c_str());
-    system("mkdir downloads");
+    system("mkdir downloads -p");
     file_name = "downloads/" + file_name;
     FILE *fp = fopen(file_name.c_str(), "w");
     if (!fp)
@@ -130,10 +130,7 @@ void handle_command(user usr)
     do
     {
         cout << "Enter a command:    " << flush;
-        do
-        {
-            getline(cin, command);
-        } while (command == "");
+        cin >> command;
 
         valid = true;
         //Logging

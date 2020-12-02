@@ -120,11 +120,11 @@ void download_attachment(int cli_sock, int type, string category, string update_
 
     if(access(path.c_str(), F_OK) == 0){
         send_file(cli_sock, true, path);
-        send_data(cli_sock, true, INSTRUCTOR);
+        send_data(cli_sock, true, STUDENT);
     }
     else{
         send_file(cli_sock, false, "");
-        send_data(cli_sock, false, INSTRUCTOR);
+        send_data(cli_sock, false, STUDENT);
     }
     
 
@@ -178,6 +178,7 @@ void student(User* usr, string classname){
                 string update_name = data_list[1];
                 string res = "Your submissions for " + update_name + " -\n";
                 res += view_submission(username, classname, category, update_name);
+                res += STUDENT;
                 send_data(cli_sock, true, res);
             }
             else if(num == 3){

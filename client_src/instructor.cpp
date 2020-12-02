@@ -174,22 +174,23 @@ void view_post(user usr)
 
 void download_file(user usr)
 {
-    string category, assignment_name, student;
+    string category, assignment_name, student, file_name;
     cout << "Category:    " << flush;
     cin >> category;
     cout << "Assignment Name:    " << flush;
     cin >> assignment_name;
     cout << "Student Name:    " << flush;
     cin >> student;
+    cout << "File Name:    " << flush;
+    cin>>file_name;
 
-    string to_send = category + delim + assignment_name + delim + student;
+    string to_send = category + delim + assignment_name + delim + student + delim + file_name;
     int len = to_send.length();
 
     char sub_header[1024] = "ASK|3|";
     char *header = join_str_int(sub_header, len);
 
     send_request(usr, header, to_send, len);
-    string file_name = category + "_" + assignment_name + "_" + student;
     get_response_file(usr, file_name);
 }
 

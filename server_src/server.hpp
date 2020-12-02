@@ -116,6 +116,7 @@ void create_entry(string directory, string file, string name);
 void add_to_file(string filename, string msg);
 void add_pair(string username, string passwd);
 bool check_pair(string username, string passwd);
+string read_file(string filename);
 string file_contents(string filename); // Only those files that have a single word in every line
 vector<string> list_of_entries(string filename);
 string view_submission(string student, string course, string category, string update);
