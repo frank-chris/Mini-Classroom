@@ -1,6 +1,5 @@
 #include "client.hpp"
 
-int in_chat;
 
 void create_post(user usr)
 {
@@ -72,53 +71,11 @@ void create_post(user usr)
     }
 }
 
-void* send_chat(void* arg){
-    user* usr = (user*)arg;
-    string message;
-    int len;
-    char sub_header[1024] = "ASK|8|";
-    char *header;
 
-    while (true)
-    {
-        cout << ">> " << flush;
-        cin >> message;
-
-        if(message == "exit"){
-            len = message.length();
-            header = join_str_int(sub_header, len);
-            send_request(*usr, header, message, len);
-            break;
-        }
-        else{
-            len = message.length();
-            header = join_str_int(sub_header, len);
-            send_request(*usr, header, message, len);
-        }
-        bzero(header, strlen(header));
-    }
-    in_chat = 0;
-    return NULL;
-}
-
-void* recv_chat(void* arg){
-    user* usr = (user*)arg;
-
-    while(true){
-        get_response(*usr);
-    }
-    return NULL;
-}
-
-void chat_session(user usr, int student)
+void chat_session(user usr)
 {
     string code;
-    if(student){
-        cout << "Enter code:   " << flush;
-    }
-    else{
-        cout << "Choose a code(1-1000):   " << flush;
-    }
+    cout << "Choose a code(1-1000):   " << flush;
     cin >> code;
 
     string to_send = code;
@@ -129,26 +86,16 @@ void chat_session(user usr, int student)
 
     send_request(usr, header, to_send, len);
 
-    in_chat = 1;
+    sleep(1);
 
-    pthread_t send_thread;
-    if(pthread_create(&send_thread, NULL, send_chat, &usr) != 0){
+    pthread_t chat_thread;
+    if(pthread_create(&chat_thread, NULL, chat_client, NULL) != 0){
 		perror("thread creation error");
         return;
 	}
 
-    pthread_t recv_thread;
-    if(pthread_create(&recv_thread, NULL, recv_chat, &usr) != 0){
-		perror("thread creation error");
-        return;
-	}
+    pthread_join(chat_thread, NULL);
 
-    while(true){
-        if(in_chat == 0){
-            pthread_cancel(recv_thread);
-            break;
-        }
-    }
 }
 
 void upload_file(user usr)

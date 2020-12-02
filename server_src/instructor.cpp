@@ -169,8 +169,6 @@ void instructor(User* usr, string classname){
             else if(num == 8){
                 pthread_t chat_server_thread;
                 pthread_create(&chat_server_thread, NULL, chat_server, usr);
-                sleep(1);
-                chat_client(usr);
             }
         }
     }

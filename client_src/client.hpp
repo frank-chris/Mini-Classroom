@@ -9,8 +9,12 @@
 #include <vector>
 #include <unistd.h>
 #include <pthread.h>
+#include <netinet/in.h>
 #define BUFSIZE 1024
 #define delim '|'
+// Chat defines
+#define LENGTH 2048
+#define CHAT_PORT 9000
 
 using namespace std;
 
@@ -44,6 +48,13 @@ void enter_classroom(user);
 void get_joined_courses(user);
 void logout_user(user);
 
+//chat
+void str_overwrite_stdout();
+void str_trim_lf(char*, int);
+void* send_msg_handler(void*);
+void* recv_msg_handler(void*);
+void* chat_client(void*);
+
 //instructor
 void create_post(user);
 void upload_file(user);
@@ -54,9 +65,8 @@ void download_file(user);
 void get_people(user);
 void get_classwork(user);
 void exit_class(user);
-void* send_chat(void*);
-void* recv_chat(void*);
-void chat_session(user, int);
+void chat_session(user);
+void join_chat_session(user);
 
 //student
 void view_submission(user);

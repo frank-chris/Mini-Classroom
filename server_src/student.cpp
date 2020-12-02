@@ -202,8 +202,7 @@ void student(User* usr, string classname){
                 logged_in(usr);
             }
             else if(num == 8){
-                sleep(1);
-                chat_client(usr);
+                
             }
         }
     }

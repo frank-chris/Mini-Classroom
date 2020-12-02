@@ -174,7 +174,7 @@ void handle_command(user usr)
         else if (command == "exitclass")
             exit_class(usr);
         else if (command == "createsession")
-            chat_session(usr, 0);
+            chat_session(usr);
 
         //Student
         else if (command == "viewsub")
@@ -184,7 +184,7 @@ void handle_command(user usr)
         else if (command == "viewpost")
             view_post(usr);
         else if (command == "joinsession")
-            chat_session(usr, 1);
+            join_chat_session(usr);
 
         //else if (command == "showmy") get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);

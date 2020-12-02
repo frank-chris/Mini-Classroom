@@ -36,3 +36,19 @@ void make_submission(user usr)
     send_request(usr, header, to_send, len);
     upload_file(usr);
 }
+
+void join_chat_session(user usr)
+{
+    string code;
+    cout << "Enter code:   " << flush;
+    cin >> code;
+
+    pthread_t chat_thread;
+    if(pthread_create(&chat_thread, NULL, chat_client, NULL) != 0){
+		perror("thread creation error");
+        return;
+	}
+
+    pthread_join(chat_thread, NULL);
+
+}

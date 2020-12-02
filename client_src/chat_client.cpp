@@ -9,7 +9,7 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 #include <iostream>
-#include "server.hpp"
+#include "client.hpp"
 
 using namespace std;
 
@@ -17,18 +17,32 @@ volatile sig_atomic_t flag = 0;
 int sockfd = 0;
 char name[32];
 
+void str_overwrite_stdout()
+{
+    printf("%s", "> ");
+    fflush(stdout);
+}
+
+void str_trim_lf(char* arr, int length)
+{
+    int i;
+    for (i = 0; i < length; i++) {
+        if (arr[i] == '\n') {
+            arr[i] = '\0';
+            break;
+        }
+    }
+}
+
 void* send_msg_handler(void* arg) {
-    User* chat_user = (User*)arg;
 
     char message[LENGTH] = {};
 	char buffer[LENGTH + 32 + 32] = {};
 
     while(true) {
-        string header;
-        string data;
-        recv_data(chat_user->cli_sock, header, data);
-
-        strcpy(message, data.c_str());
+        str_overwrite_stdout();
+        fgets(message, LENGTH, stdin);
+        str_trim_lf(message, LENGTH);
 
         if (strcmp(message, "exit") == 0) {
             break;
@@ -46,17 +60,17 @@ void* send_msg_handler(void* arg) {
 }
 
 void* recv_msg_handler(void* arg) {
-    User* chat_user = (User*)arg;
-
+    
 	char message[LENGTH] = {};
     while (true) {
         int receive = recv(sockfd, message, LENGTH, 0);
         if (receive > 0) {
-            send_data(chat_user->cli_sock, true, message);
-        } 
+            printf("%s", message);
+            str_overwrite_stdout();
+        }
         else if (receive == 0) {
             break;
-        } 
+        }
         else {
                 // -1
         }
@@ -67,17 +81,19 @@ void* recv_msg_handler(void* arg) {
 
 void* chat_client(void* arg){
 
-    User* chat_user = (User*)arg;
-
     const char *ip = "127.0.0.1";
 	int port = CHAT_PORT;
 
-    strcpy(name, chat_user->name.c_str());
+    cout << "Enter username:   " << flush;
+    cin >> name;
 
     struct sockaddr_in server_addr;
 
 	/* Socket settings */
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if(sockfd == -1){
+        cout<<"\nsocket failure\n";
+    }
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = inet_addr(ip);
     server_addr.sin_port = htons(port);
@@ -92,16 +108,16 @@ void* chat_client(void* arg){
     // Send name
 	send(sockfd, name, 32, 0);
 
-    send_data(chat_user->cli_sock, true, "\nWelcome to live session\n");
+    cout << "\nWelcome to live session\n";
 
     pthread_t send_msg_thread;
-    if(pthread_create(&send_msg_thread, NULL, send_msg_handler, chat_user) != 0){
+    if(pthread_create(&send_msg_thread, NULL, send_msg_handler, NULL) != 0){
 		printf("ERROR: pthread\n");
         return NULL;
 	}
 
 	pthread_t recv_msg_thread;
-    if(pthread_create(&recv_msg_thread, NULL, recv_msg_handler, chat_user) != 0){
+    if(pthread_create(&recv_msg_thread, NULL, recv_msg_handler, NULL) != 0){
 		printf("ERROR: pthread\n");
 		return NULL;
 	}

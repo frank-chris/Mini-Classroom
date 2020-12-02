@@ -85,6 +85,7 @@ void* handle_chat_client(void *arg){
     else{
 		strcpy(cli->name, name);
 		sprintf(buff_out, "%s has joined\n", cli->name);
+		printf("%s", buff_out);
 		send_message(buff_out, cli->uid);
 	}
 
@@ -103,6 +104,7 @@ void* handle_chat_client(void *arg){
 		} 
         else if (receive == 0 || strcmp(buff_out, "exit") == 0){
 			sprintf(buff_out, "%s has left\n", cli->name);
+			printf("%s", buff_out);
 			send_message(buff_out, cli->uid);
 			leave_flag = 1;
 		} 
@@ -175,9 +177,7 @@ void* chat_server(void* arg){
         /* Check if max clients is reached */
 		if((cli_count + 1) == MAX_CLIENTS){
             // TODO ****
-			string res;
-            res = "\nMax limit reached. Rejected entry\n";
-            send_data(chat_user->cli_sock, true, res);
+			cout << "\nMax clients reached\n";
 			close(connfd);
 			continue;
 		}
