@@ -25,22 +25,26 @@ h17 = net.addHost('h17')
 s = {}
 # switches
 for i in range(1,5):
-    s[i] = net.addHost('s'+str(i))
+    s[i] = net.addSwitch('s'+str(i))
+
+s5 = net.addSwitch('s5')
 
 # controller
 c0 = net.addController('c0')
 
 # links
+net.addLink(h17, s5, bw=BW)
+
 for i in range(1,5):
-    net.addLink(h17, s[i], bw=BW)
+    net.addLink(s5, s[i], bw=BW/4)
     for j in range(1,5):
-        net.addLink(h[(4*(i-1))+j], s[i], bw=BW/4)
+        net.addLink(h[(4*(i-1))+j], s[i], bw=BW/16)
 
 net.start()
 
 # run scripts on hosts
 
-popens[h17] = h17.popen("./server_src/server")
+popens[h17] = h17.popen("./server_src/server " + str(h17.IP()))
 
 for i in range(1,17):
     popens[h[i]] = h[i].popen("./client_src/client " + str(h17.IP()) + " 8080 workload" + str(i-1) + ".txt")

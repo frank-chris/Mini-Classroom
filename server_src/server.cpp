@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <stdlib.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <string.h>
 #include <pthread.h>
 #include "server.hpp"
@@ -31,12 +32,18 @@ void *new_client_thread(void* arg){
 }
 
 int main(int argc, char const *argv[])
-{
+{	
+	if (argc != 2)
+	{
+		cerr<<"Invalid number of arguments"<<endl;
+		exit (-1);
+	}
     struct stat buf;
     if(stat("Users", &buf) != 0){
         initFS();
     }
 
+	const char* server_ip = argv[1];
 	int server_fd, new_socket;
 	struct sockaddr_in address;
 	int opt = 1;
@@ -50,7 +57,7 @@ int main(int argc, char const *argv[])
 	}
 
 	address.sin_family = AF_INET;
-	address.sin_addr.s_addr = INADDR_ANY;
+	address.sin_addr.s_addr = inet_addr(server_ip);
 	address.sin_port = htons(PORT);
 
 	
