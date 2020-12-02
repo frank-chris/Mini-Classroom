@@ -47,7 +47,7 @@ net.start()
 popens[h17] = h17.popen("./server_src/server " + str(h17.IP()))
 
 for i in range(1,17):
-    popens[h[i]] = h[i].popen("./client_src/client " + str(h17.IP()) + " 8080 workload" + str(i-1) + ".txt")
+    popens[h[i]] = h[i].popen("./client_src/client " + str(h17.IP()) + " 8080 mininet_test/workloads/workload" + str(i-1) + ".txt")
 
 
 time.sleep(13)
