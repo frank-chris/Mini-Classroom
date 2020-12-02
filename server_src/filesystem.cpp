@@ -20,10 +20,14 @@ void initFS(){
 void makedir(string path, string dirname){
     string command = "mkdir " + path + "/" + dirname;
     system(command.c_str());
+    command = "chmod 777 " + path + "/" + dirname;
+    system(command.c_str());
 }
 
 void create_file(string path, string filename){
     string command = "touch " + path + "/" + filename;
+    system(command.c_str());
+    command = "chmod 777 " + path + "/" + filename;
     system(command.c_str());
 }
 
