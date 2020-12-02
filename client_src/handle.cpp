@@ -183,8 +183,8 @@ void handle_command(user usr)
             make_submission(usr);
         else if (command == "joinsession")
             join_chat_session(usr);
-        else if (command == "downloadfile")
-            download_file(usr);
+        else if (command == "downloadattachment")
+            download_attachment(usr);
 
         //else if (command == "showmy") get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);

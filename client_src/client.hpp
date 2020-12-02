@@ -71,6 +71,6 @@ void join_chat_session(user);
 //student
 void view_submission(user);
 void make_submission(user);
-void download_file(user);
+void download_attachment(user);
 
 #endif /* CLIENT_HPP */

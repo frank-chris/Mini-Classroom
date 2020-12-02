@@ -36,7 +36,7 @@ using namespace std;
     To view your submission for a work, type viewsub \n\
     To make a submission for a work, type makesub \n\
     To view a classroom post, type viewpost \n\
-    To download a file, type downloadfile \n\
+    To download an attachment, type downloadattachment \n\
     To logout of the class,  type exitclass \n"
 
 

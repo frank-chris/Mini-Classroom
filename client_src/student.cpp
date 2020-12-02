@@ -65,7 +65,7 @@ void join_chat_session(user usr)
     send_request(usr, header, to_send, len);
 }
 
-void download_file(user usr)
+void download_attachment(user usr)
 {
     string type, category, assignment_name, filename;
     cout << "Type:    " << flush;
@@ -85,7 +85,5 @@ void download_file(user usr)
 
     send_request(usr, header, to_send, len);
     string filepath;
-    cout << "File Path:    " << flush;
-    cin >> filepath;
-    get_response_file(usr, filepath);
+    get_response_file(usr, filename);
 }
