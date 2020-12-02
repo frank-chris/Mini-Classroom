@@ -50,10 +50,10 @@ void logout_user(user);
 
 //chat
 void str_overwrite_stdout();
-void str_trim_lf(char*, int);
-void* send_msg_handler(void*);
-void* recv_msg_handler(void*);
-void* chat_client(void*);
+void str_trim_lf(char *, int);
+void *send_msg_handler(void *);
+void *recv_msg_handler(void *);
+void *chat_client(void *);
 
 //instructor
 void create_post(user);
@@ -71,5 +71,6 @@ void join_chat_session(user);
 //student
 void view_submission(user);
 void make_submission(user);
+void download_file(user);
 
 #endif /* CLIENT_HPP */

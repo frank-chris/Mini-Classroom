@@ -181,10 +181,10 @@ void handle_command(user usr)
             view_submission(usr);
         else if (command == "makesub")
             make_submission(usr);
-        else if (command == "viewpost")
-            view_post(usr);
         else if (command == "joinsession")
             join_chat_session(usr);
+        else if (command == "downloadfile")
+            download_file(usr);
 
         //else if (command == "showmy") get_joined_courses(usr);
         //else if (command == "showmy") get_joined_courses(usr);
