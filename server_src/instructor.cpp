@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <dirent.h>
+#include <signal.h>
 
 using namespace std;
 
@@ -94,6 +95,7 @@ void instructor(User* usr, string classname){
             }
         }
         else if(strings_list[0] == "ASK"){
+            pthread_t chat_server_thread;
             int num = stoi(strings_list[1]);
             if(num == 0){
                 int type = stoi(data_list[0]);
@@ -167,10 +169,13 @@ void instructor(User* usr, string classname){
                 logged_in(usr);
             }
             else if(num == 8){
-                pthread_t chat_server_thread;
                 pthread_create(&chat_server_thread, NULL, chat_server, usr);
             }
             else if(num == 9){
+                kill(getpid(), SIGHUP);
+                sleep(1);
+                pthread_cancel(chat_server_thread);
+                cout<<"\nChat server closed\n";
                 send_data(cli_sock, true, INSTRUCTOR);
             }
         }

@@ -23,6 +23,21 @@ client_t *clients[MAX_CLIENTS];
 
 pthread_mutex_t clients_mutex = PTHREAD_MUTEX_INITIALIZER;
 
+void close_clients(int h){
+	pthread_mutex_lock(&clients_mutex);
+
+	for(int i=0; i<MAX_CLIENTS; ++i){
+		if(clients[i]){
+			if(write(clients[i]->sockfd, "Chat ended", strlen("Chat ended")) < 0){
+				perror("ERROR: write to descriptor failed");
+				break;
+			}
+		}
+	}
+	pthread_mutex_unlock(&clients_mutex);
+	cout<<"Received signal. Closed chat clients";
+}
+
 /* Add clients to queue */
 void queue_add(client_t *cl){
 	pthread_mutex_lock(&clients_mutex);
@@ -98,11 +113,18 @@ void* handle_chat_client(void *arg){
 
 		int receive = recv(cli->sockfd, buff_out, BUFFER_SZ, 0);
 		if (receive > 0){
+			if(strcmp(buff_out, "exit") == 0){
+				sprintf(buff_out, "%s has left\n", cli->name);
+				printf("%s", buff_out);
+				send_message(buff_out, cli->uid);
+				leave_flag = 1;
+				continue;
+			}
 			if(strlen(buff_out) > 0){
 				send_message(buff_out, cli->uid);
 			}
 		} 
-        else if (receive == 0 || strcmp(buff_out, "exit") == 0){
+        else if (receive == 0){
 			sprintf(buff_out, "%s has left\n", cli->name);
 			printf("%s", buff_out);
 			send_message(buff_out, cli->uid);
@@ -143,9 +165,8 @@ void* chat_server(void* arg){
     serv_addr.sin_addr.s_addr = inet_addr(ip);
     serv_addr.sin_port = htons(port);
 
-
-    /* Ignore pipe signals */
 	signal(SIGPIPE, SIG_IGN);
+	signal(SIGHUP, close_clients);
 
 	if(setsockopt(listenfd, SOL_SOCKET,(SO_REUSEPORT | SO_REUSEADDR),(char*)&option,sizeof(option)) < 0){
 		perror("ERROR: setsockopt failed");

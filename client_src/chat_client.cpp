@@ -66,6 +66,9 @@ void* recv_msg_handler(void* arg) {
     while (true) {
         int receive = recv(sockfd, message, LENGTH, 0);
         if (receive > 0) {
+            if(strcmp(message, "Chat ended") == 0){
+                break;
+            }
             printf("%s", message);
             str_overwrite_stdout();
         }
@@ -77,6 +80,7 @@ void* recv_msg_handler(void* arg) {
         }
         memset(message, 0, sizeof(message));
     }
+    flag = 1;
     return NULL;
 }
 
