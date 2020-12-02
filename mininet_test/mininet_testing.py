@@ -55,6 +55,8 @@ time.sleep(13)
 # monitoring outputs of scripts
 for hst, line in pmonitor(popens, timeoutms=500):
     if hst:
+        if "nvalid" in line:
+            continue
         print(str(hst.name) +": " + str(line), end = '')
     else:
         break

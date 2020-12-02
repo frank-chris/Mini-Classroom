@@ -176,7 +176,12 @@ void instructor(User* usr, string classname){
                 logged_in(usr);
             }
             else if(num == 8){
-                pthread_create(&chat_server_thread, NULL, chat_server, usr);
+                chat_arg* chat_user = (chat_arg*)malloc(sizeof(chat_arg));
+                chat_user->cli_sock = usr->cli_sock;
+                chat_user->name = usr->name;
+                chat_user->active = usr->active;
+                chat_user->p_code = stoi(data_list[0]);
+                pthread_create(&chat_server_thread, NULL, chat_server, chat_user);
             }
             else if(num == 9){
                 kill(getpid(), SIGHUP);

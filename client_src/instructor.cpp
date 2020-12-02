@@ -75,9 +75,9 @@ void create_post(user usr)
 void chat_session(user usr)
 {
     string code;
-    cout << "Choose a code(1-1000):   " << flush;
+    cout << "Choose a code(under 50000):   " << flush;
     cin >> code;
-
+    int p_code = stoi(code);
     string to_send = code;
     int len = to_send.length();
 
@@ -89,7 +89,7 @@ void chat_session(user usr)
     sleep(1);
 
     pthread_t chat_thread;
-    if(pthread_create(&chat_thread, NULL, chat_client, NULL) != 0){
+    if(pthread_create(&chat_thread, NULL, chat_client, &p_code) != 0){
 		perror("thread creation error");
         return;
 	}
