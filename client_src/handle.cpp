@@ -8,13 +8,9 @@ int get_response_file(user usr, string file_name)
 {
     char buffer[BUFSIZE + 1];
     int num_bytes = read(usr.sock, buffer, BUFSIZE);
-
     if (num_bytes < 0)
         perror("send error");
     buffer[num_bytes] = '\0';
-
-    string temp = decrypt(buffer);
-    strcpy(buffer, temp.c_str());
 
     vector<string> keys = split_string(buffer);
 
@@ -61,10 +57,6 @@ int get_response(user usr)
     if (num_bytes < 0)
         perror("send error");
     buffer[num_bytes] = '\0';
-    // cout<<buffer<<endl;
-    string temp = decrypt(buffer);
-    strcpy (buffer, temp.c_str());
-    // cout<<buffer<<endl;
 
     vector<string> keys = split_string(buffer);
 
@@ -84,15 +76,10 @@ int get_response(user usr)
     int rec_bytes = 0;
     while (rec_bytes < len)
     {
-        memset(buffer, 0, sizeof(buffer));
         num_bytes = read(usr.sock, buffer, min(BUFSIZE, len - rec_bytes));
         buffer[num_bytes] = '\0';
         if (num_bytes < 0)
             perror("send error");
-        // cout<<buffer<<endl;
-        string temp = decrypt (buffer);
-        strcpy (buffer, temp.c_str());
-
         rec_bytes += num_bytes;
         cout << buffer << flush;
     }
@@ -104,9 +91,6 @@ int get_response(user usr)
 int send_request(user usr, char *header, string data, int len)
 {
 
-    string temp;
-    temp = encrypt (header);
-    strcpy (header, temp.c_str());
     int num_bytes = send(usr.sock, header, 1024, 0);
     if (num_bytes < 0)
     {
@@ -116,7 +100,6 @@ int send_request(user usr, char *header, string data, int len)
 
     if (len)
     {
-        data = encrypt (data);
         num_bytes = send(usr.sock, data.c_str(), len, 0);
         if (num_bytes < 0)
         {
