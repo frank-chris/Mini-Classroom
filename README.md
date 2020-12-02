@@ -32,14 +32,30 @@ In this directory, we have implemented client side functions.
 
 &nbsp;
 
-# Make commands
+# Compiling  
+  
+To compile server and client binaries use:    
+`make all`    
 
-`make all  #create server and client binaries`
+# Running  
+To run the server:  
+`./server_src/server <ip-address>`  
+Example:       
+`./server_src/server 127.0.0.1`    
+   
+To run the client:(use the port number 8080)  
+`./client_src/client <ip-address> 8080`   
+Example:     
+`./client_src/client 127.0.0.1 8080`   
+   
+# Running Mininet test   
+To run the Mininet topology and test code, use:   
+`make mininet`    
 
-`make clean  #clean up`
-
-
-
+# Cleaning   
+To clean up, use   
+`make clean`   
+  
 &nbsp;
 # How to use it (Tutorial)
 At all points, the terminal will guide with your list of available commands, and what they can be used for.
