@@ -16,12 +16,16 @@ using namespace std;
 
 void recv_data(int cli_sock, string &header, string &data){
     int data_recv;
+    string temp;
     char temp_header[BUF_SIZE + 1];
     data_recv = recv(cli_sock, temp_header, BUF_SIZE, 0);
     if(data_recv < 0){
         perror("recv() failed");
     }
     temp_header[data_recv] = '\0';
+    temp = decrypt (temp_header);
+    strcpy (temp_header, temp.c_str());
+
 
     header = temp_header;
     data = "";
@@ -36,6 +40,8 @@ void recv_data(int cli_sock, string &header, string &data){
             perror("recv() failed");
         }
         temp_buffer[data_recv] = '\0';
+        temp = decrypt (temp_buffer);
+        strcpy (temp_buffer , temp.c_str());
         buffer = temp_buffer;
         data += buffer;
         data_to_recv -= data_recv;
@@ -52,10 +58,15 @@ void send_data(int cli_sock, bool ok, string msg){
     }
     string len = to_string(msg.length());
     string resp = code + SPLITTER + len;
+    resp = encrypt(resp);
+    // cout<<resp<<endl;
     if(send(cli_sock, resp.c_str(), BUF_SIZE, 0) < 0){
         perror("send() failed");
     }
     int data_sent;
+    // cout<<msg<<endl;
+    msg = encrypt(msg);
+    // cout<<msg<<endl;
     if((data_sent = send((cli_sock), msg.c_str(), stoi(len), 0)) != stoi(len)){
         perror("send() failed");
         exit(1); // Replace this with fail message
@@ -72,6 +83,7 @@ void send_file(int cli_sock, bool ok, string filepath){
         code = "NOK";
         string len = 0;
         string resp = code + SPLITTER + len;
+        resp = encrypt (resp);
         if(send(cli_sock, resp.c_str(), BUF_SIZE, 0) < 0){
             perror("send() failed");
         }
@@ -90,6 +102,7 @@ void send_file(int cli_sock, bool ok, string filepath){
     }
     string len = to_string(filesize);
     string resp = code + SPLITTER + len;
+    resp = encrypt (resp);
     if(send(cli_sock, resp.c_str(), BUF_SIZE, 0) < 0){
         perror("send() failed");
     }
